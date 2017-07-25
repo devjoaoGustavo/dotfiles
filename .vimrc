@@ -22,10 +22,6 @@ Plugin 'tpope/vim-surround'
 Plugin 'flazz/vim-colorschemes'
 Plugin 'bronson/vim-trailing-whitespace'
 Plugin 'mattn/emmet-vim'
-" Optional tmux
-" Plugin 'christoomey/vim-tmux-navigator'
-" Plugin 'jgdavey/tslime.vim'
-" Plugin 'jpalardy/vim-slime'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
@@ -61,14 +57,15 @@ set ignorecase
 " Search do not wrap around
 set nowrap
 
-" Start scrolling 5 lines before the horizontal window border
-set scrolloff=5
+" Start scrolling 10 lines before the horizontal window border
+set scrolloff=10
 
 " Avoid lags
 set lazyredraw
 
 " Display line numbers
 set number
+" Display relative numbers on the other lines
 set relativenumber
 set numberwidth=4
 
@@ -148,10 +145,6 @@ let g:multi_cursor_quit_key='<Esc>'
 " Airline
 let g:airline_powerline_fonts = 1
 
-" RSpec terminal with tmux or iterm2
-"let g:rspec_runner = 'os_x_iterm2'
-let g:rspec_command = 'call Send_to_Tmux("rspec {spec}\n")'
-
 " Remove Bars
 set guioptions-=T
 set guioptions-=t
@@ -164,16 +157,13 @@ set guioptions-=r
 nmap \hl :nohlsearch<CR>
 
 " Open a new empty buffer
-" nmap <leader>N :enew<cr>
+nmap <leader>N :enew<cr>
 
 " Move to the next buffer
-" nmap <leader>n :bnext<CR>
+nmap <leader>n :bnext<CR>
 
 " Move to the previous buffer
-" nmap <leader>p :bprevious<CR>
-
-" Move to the previous buffer
-" nmap <leader>D :bdelete<CR>
+nmap <leader>p :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 nmap <leader>bq :bp <BAR> bd #<CR>
@@ -190,23 +180,8 @@ nmap <silent> <Leader>tt :TagbarToggle<CR>
 " Remove all trailing whitespaces at save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" RSpec.vim mappings
-" map <Leader>t :call RunCurrentSpecFile()<CR>
-" map <Leader>s :call RunNearestSpec()<CR>
-" map <Leader>l :call RunLastSpec()<CR>
-" map <Leader>a :call RunAllSpecs()<CR>
-
-" Vim slime with tmux
-" let g:slime_target = "tmux"
-" let g:slime_paste_file = "$HOME/.slime_paste"
-
-" Correct vim colors in tmux
-" set term=screen-256color
-
 " Ignore some directories
 set wildignore+=**/node_modules,**/bower_components,**/tmp,**/vendor,**/git
-" let NERDTreeIgnore=['node_modules', 'bower_components', 'tmp', 'vendor']
-" let g:ctrlp_custom_ignore = 'node_modules\|bower_components\|tmp\|vendor\|DS_Store\|git'
 
 " Python mode disable some things
 let g:pymode_options_colorcolumn = 0
