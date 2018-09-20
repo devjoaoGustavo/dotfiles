@@ -17,23 +17,19 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ludovicchabant/vim-gutentags'
-Plugin 'rking/ag.vim'
 Plugin 'tpope/vim-surround'
-Plugin 'flazz/vim-colorschemes'
 Plugin 'colepeters/spacemacs-theme.vim'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'mattn/emmet-vim'
-Plugin 'alvan/vim-closetag'
+Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'godlygeek/tabular'
+Plugin 'dracula/vim'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
-Plugin 'thoughtbot/vim-rspec'
 Plugin 'elixir-lang/vim-elixir'
 Plugin 'guns/vim-clojure-static'
 Plugin 'fatih/vim-go'
 Plugin 'python-mode/python-mode'
-Plugin 'othree/html5.vim'
 Plugin 'pangloss/vim-javascript'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-commentary'
@@ -44,11 +40,9 @@ call vundle#end()
 filetype plugin indent on
 syntax enable
 
-if (has("termguicolors"))
-  set termguicolors
-endif
 set background=dark
-colorscheme spacemacs-theme
+colorscheme dracula
+" colorscheme spacemacs-theme
 " colorscheme hybrid
 
 " https://github.com/powerline/fonts/tree/master/SourceCodePro
@@ -83,6 +77,7 @@ set hidden
 
 " New window is put below the current one
 set splitbelow
+
 " New window is put right of the current one
 set splitright
 
@@ -123,7 +118,7 @@ set autoread
 set hidden
 
 " Increase history
-set history=1000
+set history=5
 
 " Space as leader
 map <space> <leader>
@@ -162,33 +157,49 @@ set guioptions-=l
 set guioptions-=m
 set guioptions-=r
 
-" Save like spacemacs
-nmap <leader>fs :w<cr>
+" Thing for tabular
+if exists(":Tabularize")
+  nmap <Leader>a= :'<,'>Tabularize /=<CR>
+  vmap <Leader>a= :'<,'>Tabularize /=<CR>
+  nmap <Leader>a: :'<,'>Tabularize /:\zs<CR>
+  vmap <Leader>a: :'<,'>Tabularize /:\zs<CR>
+  nmap <Leader>a, :'<,'>Tabularize /,\zs<CR>
+  vmap <Leader>a, :'<,'>Tabularize /,\zs<CR>
+endif
+
+" inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+" function! s:align()
+"   let p = '^\s*|\s.*\s|\s*$'
+"   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+"     let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+"     let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+"     Tabularize/|/l1
+"     normal! 0
+"     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+"   endif
+" endfunction
+
+" Fast saving
+nmap <leader>w :w!<cr>
 
 " Quit like spacemacs
 nmap <leader>qq :q<cr>
 
-" Split window like spacemacs
-nmap <leader>wv :vs<cr>
-nmap <leader>ws :sp<cr>
-
-" change for spec like spacemacs
-nmap <leader>mrgp :A<cr>
-
-" save and exit almost like spacemacs
-nmap <leader>fsq :wq<cr>
-
-" open the explorer almost like spacemacs
-nmap <leader>fj :Ex<cr>
+nmap <leader>vv :vs<cr>
+nmap <leader>ss :sp<cr>
 
 " Clean search
-nmap \hl :nohlsearch<CR>
+nmap <leader>hl :nohlsearch<CR>
 
 " Go to next tab
 nmap <leader>x :tabn<cr>
 
 " Go to previous tab
 nmap <leader>z :tabp<cr>
+
+map <leader>l :bnext<cr>
+map <leader>h :bprevious<cr>
 
 " Open a new empty buffer
 nmap <leader>N :enew<cr>
@@ -214,6 +225,10 @@ nmap <silent> <Leader>n :NERDTreeToggle<CR>
 " Toggle Tagbar
 " nmap <silent> <Leader>tt :TagbarToggle<CR>
 
+" ack
+cnoreabbrev Ack Ack!
+nnoremap <Leader>skp :Ack!<Space>
+
 " Remove all trailing whitespaces at save
 autocmd BufWritePre * :%s/\s\+$//e
 
@@ -224,9 +239,10 @@ set wildignore+=**/node_modules,**/bower_components,**/tmp,**/vendor,**/git
 
 " Python mode disable some things
 let g:pymode_options_colorcolumn = 0
-let g:pymode_lint = 0
-let g:pymode_run = 0
-let g:pymode_virtualenv = 0
-let g:pymode_doc = 0
-let g:pymode_folding = 0
-let g:pymode_rope = 0
+let g:pymode_lint                = 0
+let g:pymode_run                 = 0
+let g:pymode_virtualenv          = 0
+let g:pymode_doc                 = 0
+let g:pymode_folding             = 0
+let g:pymode_rope                = 0
+
