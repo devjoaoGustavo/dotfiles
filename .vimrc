@@ -22,6 +22,7 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'godlygeek/tabular'
 Plugin 'dracula/vim'
 Plugin 'powerline/powerline'
+Plugin 'christoomey/vim-tmux-navigator'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
@@ -39,10 +40,10 @@ Bundle 'wakatime/vim-wakatime'
 call vundle#end()
 
 filetype plugin indent on
-syntax enable
+syntax on
 
 set background=dark
-set termguicolors
+" set termguicolors
 
 colorscheme dracula
 " colorscheme spacemacs-theme
@@ -68,7 +69,7 @@ set lazyredraw
 " Display line numbers
 set number
 " Display relative numbers on the other lines
-" set relativenumber
+set relativenumber
 set numberwidth=4
 
 " To display the status line always
@@ -139,6 +140,15 @@ map <C-x> "+c
 map <C-v> c<ESC>"+p
 imap <C-v> <C-r><C-o>+
 
+" Git
+map <leader>gb :Gblame<CR>
+
+" resize windows
+map <leader>, <C-w><
+map <leader>. <C-w>>
+map <leader>- <C-w>-
+map <leader>= <C-w>+
+
 " closetag options
 let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue'
 
@@ -150,10 +160,8 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_alt_sep = '|'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
+let g:airline_left_sep        = ''
+let g:airline_right_sep       = ''
 
 " Remove Bars
 set guioptions-=T
