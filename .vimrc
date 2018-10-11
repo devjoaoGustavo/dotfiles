@@ -18,15 +18,16 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'tpope/vim-surround'
-Plugin 'colepeters/spacemacs-theme.vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'godlygeek/tabular'
 Plugin 'dracula/vim'
+Plugin 'powerline/powerline'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'slashmili/alchemist.vim'
 Plugin 'guns/vim-clojure-static'
 Plugin 'fatih/vim-go'
 Plugin 'python-mode/python-mode'
@@ -41,12 +42,13 @@ filetype plugin indent on
 syntax enable
 
 set background=dark
+set termguicolors
+
 colorscheme dracula
 " colorscheme spacemacs-theme
-" colorscheme hybrid
 
 " https://github.com/powerline/fonts/tree/master/SourceCodePro
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+set guifont=Source\ Code\ Pro\ for\ Powerline:h16
 
 " Move the cursor to the matched string
 set incsearch
@@ -93,7 +95,7 @@ set ruler
 " Flash screen instead of sounding a beep
 set visualbell
 
-" Allow backspace in insert mode
+" Allow bacskspace in insert mode
 set backspace=start,eol,indent
 
 " Reduce the need for % in matching
@@ -132,9 +134,9 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " Ctrl C + Ctrl V
-vmap <C-c> "+yi
-vmap <C-x> "+c
-vmap <C-v> c<ESC>"+p
+map <C-c> "+yi
+map <C-x> "+c
+map <C-v> c<ESC>"+p
 imap <C-v> <C-r><C-o>+
 
 " closetag options
@@ -148,6 +150,10 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " Airline
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
 
 " Remove Bars
 set guioptions-=T
@@ -167,21 +173,9 @@ if exists(":Tabularize")
   vmap <Leader>a, :'<,'>Tabularize /,\zs<CR>
 endif
 
-" inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-" function! s:align()
-"   let p = '^\s*|\s.*\s|\s*$'
-"   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-"     let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-"     let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-"     Tabularize/|/l1
-"     normal! 0
-"     call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-"   endif
-" endfunction
-
 " Fast saving
 nmap <leader>w :w!<cr>
+nmap <Esc><Esc> :w<cr>
 
 " Quit like spacemacs
 nmap <leader>qq :q<cr>
