@@ -23,6 +23,11 @@ Plugin 'godlygeek/tabular'
 Plugin 'dracula/vim'
 Plugin 'powerline/powerline'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'Yggdroot/indentLine'
+Plugin 'mattn/emmet-vim'
+Plugin 'vim-scripts/HTML-AutoCloseTag'
+Plugin 'thoughtbot/vim-rspec'
+Plugin 'jgdavey/tslime.vim'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
@@ -134,6 +139,17 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
 
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
+
+let g:tslime_always_current_session = 1
+let g:tslime_always_current_window  = 1
+
 " Ctrl C + Ctrl V
 map <C-c> "+yi
 map <C-x> "+c
@@ -190,6 +206,10 @@ nmap <leader>qq :q<cr>
 
 nmap <leader>vv :vs<cr>
 nmap <leader>ss :sp<cr>
+
+" new buffers
+nmap <leader>vn :vnew<cr>
+nmap <leader>sn :new<cr>
 
 " Clean search
 nmap <leader>hl :nohlsearch<CR>
