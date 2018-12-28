@@ -1,0 +1,33 @@
+#! /bin/bash
+
+alias sshadd="ssh-add ~/.ssh/id_rsa_gateway"
+alias nib="ssh -i ~/.ssh/id_rsa_gateway _jpaula@nibbler0001.locaweb.com.br"
+
+alias gs="git status"
+alias gd="git diff"
+alias gcb="git checkout -b"
+alias gc="git checkout"
+alias ga="git add"
+alias gcm="git commit"
+alias amend="git commit --amend"
+alias gp="git push"
+alias gpl="git pull"
+
+alias mig="bundle exec rake db:migrate"
+alias rol="bundle exec rake db:rollback"
+alias reset="bundle exec rake db:reset"
+
+alias be="bundle exec"
+alias ber="bundle exec rspec"
+alias bero="bundle exec rspec --only-failures"
+
+alias console="bundle exec rails c"
+alias c="bundle exec rails c"
+
+alias server="bundle exec rails s"
+alias s="bundle exec rails s"
+
+alias instal="bundle install"
+alias install="bundle install"
+
+alias redis="docker run --rm -d -p 6379:6379 redis"

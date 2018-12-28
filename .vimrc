@@ -28,12 +28,17 @@ Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/HTML-AutoCloseTag'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'jgdavey/tslime.vim'
+Plugin 'KKPMW/oldbook-vim'
+Plugin 'NLKNguyen/papercolor-theme'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
-Plugin 'elixir-lang/vim-elixir'
+" elixir
+" Plugin 'elixir-lang/vim-elixir'
+Plugin 'elixir-editors/vim-elixir'
 Plugin 'slashmili/alchemist.vim'
+
 Plugin 'guns/vim-clojure-static'
 Plugin 'fatih/vim-go'
 Plugin 'python-mode/python-mode'
@@ -47,14 +52,15 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-set background=dark
-" set termguicolors
+set background=light
+set termguicolors
 
-colorscheme dracula
+colorscheme PaperColor
+" colorscheme oldbook
 " colorscheme spacemacs-theme
 
 " https://github.com/powerline/fonts/tree/master/SourceCodePro
-set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 
 " Move the cursor to the matched string
 set incsearch
@@ -140,18 +146,25 @@ map <C-k> <C-w>k
 map <C-l> <C-w>l
 
 " RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+map <Leader>rt :call RunCurrentSpecFile()<CR>
+map <Leader>rs :call RunNearestSpec()<CR>
+map <Leader>rl :call RunLastSpec()<CR>
+map <Leader>ra :call RunAllSpecs()<CR>
 
 let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
 
 let g:tslime_always_current_session = 1
 let g:tslime_always_current_window  = 1
 
+" relative path
+nnoremap <leader>cf :let @+ = expand("%")<cr>
+" full path
+nnoremap <leader>cF :let @+ = expand("%:p")<cr>
+" just filename
+nnoremap <leader>ct :let @+ = expand("%:t")<cr>
+
 " Ctrl C + Ctrl V
-map <C-c> "+yi
+map <C-c> "+y
 map <C-x> "+c
 map <C-v> c<ESC>"+p
 imap <C-v> <C-r><C-o>+
