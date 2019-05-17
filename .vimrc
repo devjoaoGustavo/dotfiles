@@ -52,10 +52,10 @@ call vundle#end()
 filetype plugin indent on
 syntax on
 
-set background=light
+set background=dark
 set termguicolors
 
-colorscheme PaperColor
+colorscheme paperColor
 " colorscheme oldbook
 " colorscheme spacemacs-theme
 
@@ -165,12 +165,16 @@ nnoremap <leader>ct :let @+ = expand("%:t")<cr>
 
 " Ctrl C + Ctrl V
 map <C-c> "+y
+map <leader>y "+y
 map <C-x> "+c
-map <C-v> c<ESC>"+p
+" Avoid control C to overwrite v-block feature
+" map <C-v> c<ESC>"+p
 imap <C-v> <C-r><C-o>+
 
 " Git
 map <leader>gb :Gblame<CR>
+map <leader>gs :Gstatus<CR>
+map <leader>gd :Gvdiff<CR>
 
 " resize windows
 map <leader>, <C-w><
@@ -233,6 +237,12 @@ nmap <leader>x :tabn<cr>
 " Go to previous tab
 nmap <leader>z :tabp<cr>
 
+" Edit the current window in a new tab
+nmap <leader>te :tabedit %<cr>
+
+" Close the current tab
+nmap <leader>tc :tabclose<cr>
+
 map <leader>l :bnext<cr>
 map <leader>h :bprevious<cr>
 
@@ -256,6 +266,9 @@ nmap <leader>bl :ls<CR>
 
 " Toggle NERDTree
 nmap <silent> <Leader>n :NERDTreeToggle<CR>
+
+" Open the Explore in the current buffer
+nmap <leader>we :Explore<cr>
 
 " Toggle Tagbar
 " nmap <silent> <Leader>tt :TagbarToggle<CR>
