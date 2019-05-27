@@ -30,14 +30,21 @@ Plugin 'thoughtbot/vim-rspec'
 Plugin 'jgdavey/tslime.vim'
 Plugin 'KKPMW/oldbook-vim'
 Plugin 'NLKNguyen/papercolor-theme'
+Plugin 'jiangmiao/auto-pairs'
 
 " Choose languages
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-rails'
+Plugin 'ngmy/vim-rubocop'
+
 " elixir
 " Plugin 'elixir-lang/vim-elixir'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'slashmili/alchemist.vim'
+Plugin 'mhinz/vim-mix-format'
+
+" PHP
+Plugin 'StanAngeloff/php.vim'
 
 Plugin 'guns/vim-clojure-static'
 Plugin 'fatih/vim-go'
@@ -60,7 +67,9 @@ colorscheme paperColor
 " colorscheme spacemacs-theme
 
 " https://github.com/powerline/fonts/tree/master/SourceCodePro
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+" set macligatures
+set guifont=Fira\ Code\ Retina:h14
+" set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 
 " Move the cursor to the matched string
 set incsearch
@@ -80,7 +89,7 @@ set lazyredraw
 " Display line numbers
 set number
 " Display relative numbers on the other lines
-set relativenumber
+" set relativenumber
 set numberwidth=4
 
 " To display the status line always
@@ -252,6 +261,9 @@ nmap <leader>N :enew<cr>
 " Open a new tab
 nmap <leader>tn :tabnew<cr>
 
+nnoremap <Tab> :bnext<cr>
+nnoremap <S-Tab> :bprevious<cr>
+
 " Move to the next buffer
 nmap <leader>bn :bnext<CR>
 
@@ -285,6 +297,17 @@ autocmd FileType vue syntax sync fromstart
 " Ignore some directories
 set wildignore+=**/node_modules,**/bower_components,**/tmp,**/vendor,**/git
 
+" Mix format config
+let g:mix_format_on_save = 1
+let g:mix_format_silent_errors = 1
+
+" Rubocop config
+let g:vimrubocop_keymap = 0
+nmap <Leader>r :RuboCop<CR>
+
+highlight ColorColumn ctermbg=red ctermfg=white guibg=#8b008b
+call matchadd('ColorColumn', '\%81v.\+', 100) "set column nr
+
 " Python mode disable some things
 let g:pymode_options_colorcolumn = 0
 let g:pymode_lint                = 0
@@ -293,4 +316,3 @@ let g:pymode_virtualenv          = 0
 let g:pymode_doc                 = 0
 let g:pymode_folding             = 0
 let g:pymode_rope                = 0
-
