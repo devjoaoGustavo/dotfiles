@@ -15,6 +15,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'tpope/vim-surround'
@@ -22,12 +23,15 @@ Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'godlygeek/tabular'
 Plugin 'dracula/vim'
 Plugin 'powerline/powerline'
-Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'w0rp/ale'
+Plugin 'tpope/vim-endwise'
+" tmux stuffs
+" Plugin 'christoomey/vim-tmux-navigator'
+" Plugin 'jgdavey/tslime.vim'
 Plugin 'Yggdroot/indentLine'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/HTML-AutoCloseTag'
 Plugin 'thoughtbot/vim-rspec'
-Plugin 'jgdavey/tslime.vim'
 Plugin 'KKPMW/oldbook-vim'
 Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'jiangmiao/auto-pairs'
@@ -192,7 +196,7 @@ map <leader>- <C-w>-
 map <leader>= <C-w>+
 
 " closetag options
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.vue'
+let g:closetag_filenames = '*.erb,*.html,*.xhtml,*.phtml,*.vue'
 
 " Multi cursors mapping
 let g:multi_cursor_next_key='<C-n>'
@@ -242,9 +246,11 @@ nmap <leader>hl :nohlsearch<CR>
 
 " Go to next tab
 nmap <leader>x :tabn<cr>
+nnoremap <Tab> :tabn<cr>
 
 " Go to previous tab
 nmap <leader>z :tabp<cr>
+nnoremap <S-Tab> :tabp<cr>
 
 " Edit the current window in a new tab
 nmap <leader>te :tabedit %<cr>
@@ -260,9 +266,6 @@ nmap <leader>N :enew<cr>
 
 " Open a new tab
 nmap <leader>tn :tabnew<cr>
-
-nnoremap <Tab> :bnext<cr>
-nnoremap <S-Tab> :bprevious<cr>
 
 " Move to the next buffer
 nmap <leader>bn :bnext<CR>
