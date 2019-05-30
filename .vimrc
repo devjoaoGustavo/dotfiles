@@ -25,10 +25,15 @@ Plugin 'dracula/vim'
 Plugin 'powerline/powerline'
 Plugin 'w0rp/ale'
 Plugin 'tpope/vim-endwise'
+Plugin 'xuyuanp/nerdtree-git-plugin'
+Plugin 'valloric/youcompleteme'
+Plugin 'jremmen/vim-ripgrep'
+Bundle 'wakatime/vim-wakatime'
+Plugin 'nathanaelkane/vim-indent-guides'
+
 " tmux stuffs
 " Plugin 'christoomey/vim-tmux-navigator'
 " Plugin 'jgdavey/tslime.vim'
-Plugin 'Yggdroot/indentLine'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/HTML-AutoCloseTag'
 Plugin 'thoughtbot/vim-rspec'
@@ -56,8 +61,7 @@ Plugin 'python-mode/python-mode'
 Plugin 'pangloss/vim-javascript'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-commentary'
-Plugin 'mileszs/ack.vim'
-Bundle 'wakatime/vim-wakatime'
+" Plugin 'mileszs/ack.vim'
 call vundle#end()
 
 filetype plugin indent on
@@ -71,8 +75,10 @@ colorscheme paperColor
 " colorscheme spacemacs-theme
 
 " https://github.com/powerline/fonts/tree/master/SourceCodePro
-" set macligatures
-set guifont=Fira\ Code\ Retina:h14
+if has("gui_macvim")
+  set macligatures
+endif
+set guifont=Fira\ Code:h16
 " set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 
 " Move the cursor to the matched string
@@ -169,6 +175,8 @@ let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
 let g:tslime_always_current_session = 1
 let g:tslime_always_current_window  = 1
 
+let g:indent_guides_enable_on_vim_startup = 1
+
 " relative path
 nnoremap <leader>cf :let @+ = expand("%")<cr>
 " full path
@@ -228,11 +236,12 @@ if exists(":Tabularize")
 endif
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nmap <leader>ww :w!<cr>
 nmap <Esc><Esc> :w<cr>
 
 " Quit like spacemacs
-nmap <leader>qq :q<cr>
+nmap <leader>wd :q<cr>
+nmap <leader>qq :q!<cr>
 
 nmap <leader>vv :vs<cr>
 nmap <leader>ss :sp<cr>
@@ -245,11 +254,11 @@ nmap <leader>sn :new<cr>
 nmap <leader>hl :nohlsearch<CR>
 
 " Go to next tab
-nmap <leader>x :tabn<cr>
+" nmap <leader>x :tabn<cr>
 nnoremap <Tab> :tabn<cr>
 
 " Go to previous tab
-nmap <leader>z :tabp<cr>
+" nmap <leader>z :tabp<cr>
 nnoremap <S-Tab> :tabp<cr>
 
 " Edit the current window in a new tab
@@ -258,8 +267,8 @@ nmap <leader>te :tabedit %<cr>
 " Close the current tab
 nmap <leader>tc :tabclose<cr>
 
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+" map <leader>l :bnext<cr>
+" map <leader>h :bprevious<cr>
 
 " Open a new empty buffer
 nmap <leader>N :enew<cr>
@@ -279,6 +288,12 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 " Show all open buffers and their status
 nmap <leader>bl :ls<CR>
 
+" list buffers
+nmap <leader>bb :ls<cr>
+
+" go to buffer
+nmap <leader>bf :buffer<space>
+
 " Toggle NERDTree
 nmap <silent> <Leader>n :NERDTreeToggle<CR>
 
@@ -289,8 +304,9 @@ nmap <leader>we :Explore<cr>
 " nmap <silent> <Leader>tt :TagbarToggle<CR>
 
 " ack
-cnoreabbrev Ack Ack!
-nnoremap <Leader>skp :Ack!<Space>
+" cnoreabbrev Ack Ack!
+" Rgrep
+nnoremap <Leader>ff :Rg<Space>
 
 " Remove all trailing whitespaces at save
 autocmd BufWritePre * :%s/\s\+$//e
@@ -306,7 +322,10 @@ let g:mix_format_silent_errors = 1
 
 " Rubocop config
 let g:vimrubocop_keymap = 0
-nmap <Leader>r :RuboCop<CR>
+nmap <Leader>rr :RuboCop<CR>
+
+" run credo in the current buffer
+nmap <leader>cc :Mix credo %<cr>
 
 highlight ColorColumn ctermbg=red ctermfg=white guibg=#8b008b
 call matchadd('ColorColumn', '\%81v.\+', 100) "set column nr
