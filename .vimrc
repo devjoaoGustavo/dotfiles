@@ -30,10 +30,10 @@ Plugin 'valloric/youcompleteme'
 Plugin 'jremmen/vim-ripgrep'
 Bundle 'wakatime/vim-wakatime'
 Plugin 'nathanaelkane/vim-indent-guides'
+Plugin 'pseewald/vim-anyfold'
 
 " tmux stuffs
 " Plugin 'christoomey/vim-tmux-navigator'
-" Plugin 'jgdavey/tslime.vim'
 Plugin 'mattn/emmet-vim'
 Plugin 'vim-scripts/HTML-AutoCloseTag'
 Plugin 'thoughtbot/vim-rspec'
@@ -47,7 +47,6 @@ Plugin 'tpope/vim-rails'
 Plugin 'ngmy/vim-rubocop'
 
 " elixir
-" Plugin 'elixir-lang/vim-elixir'
 Plugin 'elixir-editors/vim-elixir'
 Plugin 'slashmili/alchemist.vim'
 Plugin 'mhinz/vim-mix-format'
@@ -61,7 +60,10 @@ Plugin 'python-mode/python-mode'
 Plugin 'pangloss/vim-javascript'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-commentary'
-" Plugin 'mileszs/ack.vim'
+
+" CSS
+Plugin 'ap/vim-css-color'
+
 call vundle#end()
 
 filetype plugin indent on
@@ -157,6 +159,13 @@ set history=5
 map <space> <leader>
 
 let g:user_emmet_leader_key='<leader>'
+
+" in order to ctrlp keep the root directory set up
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+let g:ctrlp_working_path_mode = 'ra'
+set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.idea/*,*/.DS_Store,*/vendor,*/deps/*,*/cover/*
 
 " Window buffer navigation
 map <C-h> <C-w>h
@@ -312,6 +321,13 @@ nnoremap <Leader>ff :Rg<Space>
 autocmd BufWritePre * :%s/\s\+$//e
 
 autocmd FileType vue syntax sync fromstart
+
+" Fold
+autocmd Filetype * AnyFoldActivate
+let g:anyfold_fold_comments=1
+set foldlevel=99
+" colorscheme solarized
+hi Folded term=NONE cterm=NONE
 
 " Ignore some directories
 set wildignore+=**/node_modules,**/bower_components,**/tmp,**/vendor,**/git
