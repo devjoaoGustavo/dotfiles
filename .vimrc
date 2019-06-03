@@ -13,6 +13,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
@@ -29,8 +30,9 @@ Plugin 'xuyuanp/nerdtree-git-plugin'
 Plugin 'valloric/youcompleteme'
 Plugin 'jremmen/vim-ripgrep'
 Bundle 'wakatime/vim-wakatime'
-Plugin 'nathanaelkane/vim-indent-guides'
+" Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'pseewald/vim-anyfold'
+Plugin 'wezm/fzf.vim', { 'branch': 'rg' }
 
 " tmux stuffs
 " Plugin 'christoomey/vim-tmux-navigator'
@@ -47,8 +49,8 @@ Plugin 'tpope/vim-rails'
 Plugin 'ngmy/vim-rubocop'
 
 " elixir
-Plugin 'elixir-editors/vim-elixir'
-Plugin 'slashmili/alchemist.vim'
+Plugin 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
+Plugin 'slashmili/alchemist.vim',   { 'for': ['elixir', 'eelixir'] }
 Plugin 'mhinz/vim-mix-format'
 
 " PHP
@@ -80,7 +82,7 @@ colorscheme paperColor
 if has("gui_macvim")
   set macligatures
 endif
-set guifont=Fira\ Code:h16
+set guifont=Fira\ Code\ Medium:h16
 " set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 
 " Move the cursor to the matched string
@@ -155,6 +157,13 @@ set hidden
 " Increase history
 set history=5
 
+set list
+set listchars=tab:›\ ,trail:⋅,precedes:«,precedes:«
+
+set omnifunc=syntaxcomplete#Complete       " Set omni-completion method
+set wildmode=list:longest                  " Complete only until point of ambiguity
+set wildignore+=**/*.jpg,*.jpeg,*.gif,**/*.png,*.gif,*.psd,*.o,*.obj,*.min.js
+
 " Space as leader
 map <space> <leader>
 
@@ -184,7 +193,7 @@ let g:rspec_command = 'call Send_to_Tmux("bundle exec rspec {spec}\n")'
 let g:tslime_always_current_session = 1
 let g:tslime_always_current_window  = 1
 
-let g:indent_guides_enable_on_vim_startup = 1
+" let g:indent_guides_enable_on_vim_startup = 1
 
 " relative path
 nnoremap <leader>cf :let @+ = expand("%")<cr>
@@ -223,8 +232,10 @@ let g:multi_cursor_quit_key='<Esc>'
 
 " Airline
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep        = ''
-let g:airline_right_sep       = ''
+" let g:airline_left_sep        = ''
+" let g:airline_right_sep       = ''
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail'
 
 " Remove Bars
 set guioptions-=T
@@ -263,12 +274,12 @@ nmap <leader>sn :new<cr>
 nmap <leader>hl :nohlsearch<CR>
 
 " Go to next tab
-" nmap <leader>x :tabn<cr>
-nnoremap <Tab> :tabn<cr>
+nmap <leader>x :tabn<cr>
+" nnoremap <Tab> :tabn<cr>
 
 " Go to previous tab
-" nmap <leader>z :tabp<cr>
-nnoremap <S-Tab> :tabp<cr>
+nmap <leader>z :tabp<cr>
+" nnoremap <S-Tab> :tabp<cr>
 
 " Edit the current window in a new tab
 nmap <leader>te :tabedit %<cr>
@@ -287,9 +298,11 @@ nmap <leader>tn :tabnew<cr>
 
 " Move to the next buffer
 nmap <leader>bn :bnext<CR>
+nnoremap <Tab> :bnext<cr>
 
 " Move to the previous buffer
 nmap <leader>bp :bprevious<CR>
+nnoremap <S-Tab> :bprevious<cr>
 
 " Close the current buffer and move to the previous one
 nmap <leader>bq :bp <BAR> bd #<CR>
@@ -326,15 +339,14 @@ autocmd FileType vue syntax sync fromstart
 autocmd Filetype * AnyFoldActivate
 let g:anyfold_fold_comments=1
 set foldlevel=99
-" colorscheme solarized
 hi Folded term=NONE cterm=NONE
 
 " Ignore some directories
 set wildignore+=**/node_modules,**/bower_components,**/tmp,**/vendor,**/git
 
 " Mix format config
-let g:mix_format_on_save = 1
-let g:mix_format_silent_errors = 1
+" let g:mix_format_on_save = 1
+" let g:mix_format_silent_errors = 1
 
 " Rubocop config
 let g:vimrubocop_keymap = 0
@@ -342,9 +354,17 @@ nmap <Leader>rr :RuboCop<CR>
 
 " run credo in the current buffer
 nmap <leader>cc :Mix credo %<cr>
+nmap <leader>mf :Mix format %<cr>
 
 highlight ColorColumn ctermbg=red ctermfg=white guibg=#8b008b
 call matchadd('ColorColumn', '\%81v.\+', 100) "set column nr
+
+command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --ignore-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
 
 " Python mode disable some things
 let g:pymode_options_colorcolumn = 0
