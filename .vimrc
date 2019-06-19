@@ -30,14 +30,11 @@ Plugin 'xuyuanp/nerdtree-git-plugin'
 Plugin 'valloric/youcompleteme'
 Plugin 'jremmen/vim-ripgrep'
 Bundle 'wakatime/vim-wakatime'
-" Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'pseewald/vim-anyfold'
 Plugin 'wezm/fzf.vim', { 'branch': 'rg' }
 
 " tmux stuffs
-" Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mattn/emmet-vim'
-Plugin 'vim-scripts/HTML-AutoCloseTag'
 Plugin 'thoughtbot/vim-rspec'
 Plugin 'KKPMW/oldbook-vim'
 Plugin 'NLKNguyen/papercolor-theme'
@@ -62,9 +59,7 @@ Plugin 'python-mode/python-mode'
 Plugin 'pangloss/vim-javascript'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-commentary'
-
-" CSS
-Plugin 'ap/vim-css-color'
+Plugin 'vim-scripts/HTML-AutoCloseTag'
 
 call vundle#end()
 
@@ -84,6 +79,9 @@ if has("gui_macvim")
 endif
 set guifont=Fira\ Code\ Medium:h16
 " set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+
+set mouse=a
+set clipboard+=unnamedplus
 
 " Move the cursor to the matched string
 set incsearch
@@ -150,9 +148,6 @@ set noswapfile
 
 " Automatically read changes
 set autoread
-
-" Hidden buffer instead of close
-set hidden
 
 " Increase history
 set history=5
@@ -236,6 +231,7 @@ let g:airline_powerline_fonts = 1
 " let g:airline_right_sep       = ''
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#show_buffers = 0
 
 " Remove Bars
 set guioptions-=T
@@ -275,11 +271,11 @@ nmap <leader>hl :nohlsearch<CR>
 
 " Go to next tab
 nmap <leader>x :tabn<cr>
-" nnoremap <Tab> :tabn<cr>
+nnoremap <Tab> :tabn<cr>
 
 " Go to previous tab
 nmap <leader>z :tabp<cr>
-" nnoremap <S-Tab> :tabp<cr>
+nnoremap <S-Tab> :tabp<cr>
 
 " Edit the current window in a new tab
 nmap <leader>te :tabedit %<cr>
@@ -298,11 +294,11 @@ nmap <leader>tn :tabnew<cr>
 
 " Move to the next buffer
 nmap <leader>bn :bnext<CR>
-nnoremap <Tab> :bnext<cr>
+" nnoremap <Tab> :bnext<cr>
 
 " Move to the previous buffer
 nmap <leader>bp :bprevious<CR>
-nnoremap <S-Tab> :bprevious<cr>
+" nnoremap <S-Tab> :bprevious<cr>
 
 " Close the current buffer and move to the previous one
 nmap <leader>bq :bp <BAR> bd #<CR>
