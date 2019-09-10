@@ -1,34 +1,34 @@
 " To work cool, disable compatibility with Vi
 set nocompatible
+
 filetype off
 
-set rtp+=~/.vim/bundle/Vundle.vim
 " Keep Plug commands between vundle#begin/end.
-call vundle#begin()
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-surround'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'w0rp/ale'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-vinegar'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'jremmen/vim-ripgrep'
-Plugin 'tpope/vim-commentary'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'ngmy/vim-rubocop'
-Plugin '2072/PHP-Indenting-for-VIm'
-Plugin 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
-Plugin 'mhinz/vim-mix-format'
-Plugin 'pangloss/vim-javascript'
-Plugin 'tmhedberg/matchit'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'scrooloose/nerdtree'
-Plugin 'tomasr/molokai'
-Plugin 'sonph/onehalf'
-call vundle#end()
+call plug#begin('~/.vim/plugged')
+Plug 'VundleVim/Vundle.vim'
+Plug 'kien/ctrlp.vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'tpope/vim-surround'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'godlygeek/tabular'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-vinegar'
+Plug 'wakatime/vim-wakatime'
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-commentary'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'ngmy/vim-rubocop'
+Plug '2072/PHP-Indenting-for-VIm'
+Plug 'elixir-editors/vim-elixir', { 'for': ['elixir', 'eelixir'] }
+Plug 'slashmili/alchemist.vim',   { 'for': ['elixir', 'eelixir'] }
+Plug 'mhinz/vim-mix-format'
+Plug 'pangloss/vim-javascript'
+Plug 'tmhedberg/matchit'
+Plug 'jiangmiao/auto-pairs'
+call plug#end()
 
 filetype plugin indent on
 syntax on
@@ -36,7 +36,7 @@ syntax on
 set termguicolors
 
 set background=dark " Set to dark for a dark variant
-colorscheme onehalfdark
+colorscheme grb24bit
 
 " Space as leader
 let mapleader = " "
@@ -45,19 +45,17 @@ let mapleader = " "
 set incsearch
 set hlsearch
 " Search ignore case
-
 set ignorecase
 set smartcase
-
-set viminfo=""
 
 nnoremap <leader><leader> <c-^>
 
 function! GitBranch()
   return system("echo \"($(git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'))\" | tr -d '\n'")
-endfunction\
+endfunction
 
-set statusline=%<%f\ (%{&ft})\ %{GitBranch()}\ %-4(%m%)%=%-19(%l,%c%V%)\ %P
+" set statusline=%<%f\ %h%m%r\ %y%{GitBranch()}%=%-14.(%l,%c%V%)
+set statusline=%<%f\ (%{&ft})\ %{GitBranch()}\ %-4(%m%)%=%-19(%3l,%02c%03V%)
 
 " Don't syntax highlight markdown because it's often wrong
 autocmd! FileType mkd setlocal syn=off
@@ -67,23 +65,29 @@ autocmd BufReadPost *
       \   exe "normal g`\"" |
       \ endif
 
+set cursorline
+
 set showcmd
 set ruler
+set guicursor=
 
 if has('nvim')
   set clipboard=unnamedplus
 endif
 
-" set guicursor=
-set nocursorline
+set autoindent
+set copyindent
 
 set laststatus=2
 
+" Search do not wrap around
+set nowrap
+
+" Avoid lags
+set lazyredraw
+
 " Display relative numbers on the other lines
 set relativenumber
-
-set path+=**
-set wildmenu
 
 " Preserve buffer unwritten when editing other ones. Warning is thrown when
 " try to exit
@@ -96,22 +100,29 @@ set belloff=all
 
 set textwidth=80
 set colorcolumn=+1
-" hi ColorColumn guibg=#073642
+hi ColorColumn guibg=#222722
+
+" Reduce the need for % in matching
+set showmatch
+set matchtime=1
+
+set cmdheight=1
 
 set shell=bash
 
+set t_ti= t_te=
 set backspace=indent,eol,start
 
+set wildmode=longest,list
+set wildmenu
 " Fix slow O inserts
-set ttimeout timeoutlen=500 ttimeoutlen=100
+set timeout timeoutlen=1000 ttimeoutlen=100
 
 set modeline
 set modelines=3
 
+set foldmethod=manual
 set nofoldenable
-
-set autoindent
-set copyindent
 
 " Tab characters entered will be changed to spaces
 set expandtab
@@ -121,25 +132,22 @@ set shiftwidth=2
 set softtabstop=2
 set shiftround
 
-set matchtime=2
-
-if !has('nvim')
-  set ttyfast
-endif
-
 " Avoid creation of * .ext files
 set nowritebackup
 set nobackup
-set autoread
 set noswapfile
 
 set nojoinspaces
 " Automatically read changes
+set autoread
 
 set signcolumn=no
 
 " Increase history
-set history=100
+set history=5
+
+set list
+set listchars=tab:›\ ,trail:⋅,precedes:«
 
 " Hitting K in a Ruby file opens rdoc, which completely breaks the terminal
 " to the point of having to kill vim and do `reset`. Unmap it entirely.
@@ -152,9 +160,14 @@ nmap <Right> :echo "Use l"<cr>
 
 nnoremap <leader>o :only<cr>
 
-" let g:ctrlp_user_command = 'rg --files %s'
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-let g:ctrlp_mruf_max = 2
+" in order to ctrlp keep the root directory set up
+if exists("g:ctrlp_user_command")
+  unlet g:ctrlp_user_command
+endif
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_user_command = 'rg --files %s'
+let g:ctrlp_match_window = 'bottom,order:ttb,min:5,max:15'
+let g:ctrlp_switch_buffer = 'et'
 
 set winwidth=84
 " We have to have a winheight bigger than we want to set winminheight. But if
@@ -169,6 +182,8 @@ map <C-h> <C-w>h
 map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-l> <C-w>l
+
+map <leader>y "+y
 
 " relative path
 nnoremap <leader>cf :let @+ = expand("%")<cr>
@@ -199,6 +214,12 @@ if exists(":Tabularize")
   vmap <Leader>a, :'<,'>Tabularize /,\zs<CR>
 endif
 
+" Fast saving
+nmap <Esc><Esc> :w<cr>
+
+" Quit like spacemacs
+nmap <leader>wd :q<cr>
+
 nmap <leader>vv :vs<cr>
 nmap <leader>ss :sp<cr>
 
@@ -209,14 +230,29 @@ nmap <leader>sn :new<cr>
 " Clean search
 nmap <leader>hl :nohlsearch<CR>
 
+" Go to next tab
+nnoremap <Tab> :tabn<cr>
+
+" Go to previous tab
+nnoremap <S-Tab> :tabp<cr>
+
 " Edit the current window in a new tab
 nmap <leader>te :tabedit %<cr>
 
 " Close the current tab
 nmap <leader>tc :tabclose<cr>
 
+" Open a new empty buffer
+nmap <leader>N :enew<cr>
+
 " Open a new tab
 nmap <leader>tn :tabnew<cr>
+
+" Move to the next buffer
+nmap <leader>bn :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>bp :bprevious<CR>
 
 " Close the current buffer and move to the previous one
 nmap <leader>bq :bp <BAR> bd #<CR>
@@ -224,9 +260,17 @@ nmap <leader>bq :bp <BAR> bd #<CR>
 " list buffers
 nmap <leader>bb :ls<cr>
 
+" go to buffer
+nmap <leader>bf :buffer<space>
+
+" Open the Explore in the current buffer
+nmap <leader>we :Explore<cr>
+nmap <leader>ve :Vexplore<cr>
+nmap <leader>ee :Texplore<cr>
+
 " Rgrep
-set grepprg=rg\ --vimgrep\ $*
-nnoremap <c-a> :Rg<Space>
+set grepprg=rg
+nnoremap <leader>ff :Rg<Space>
 
 " Remove all trailing whitespaces at save
 let g:better_whitespace_enabled=1
@@ -257,31 +301,3 @@ nmap <leader>fer :so ~/.vimrc<cr>
 let g:PHP_noArrowMatching = 1
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4
 autocmd FileType json setlocal shiftwidth=4 softtabstop=4
-
-map <leader>n :NERDTreeToggle<CR>
-
-" prevent auto-pairs from map <M-p> as toggle
-if has('nvim')
-  let g:AutoPairsShortcutToggle = ''
-endif
-
-" start terminal buffer in the insert mode
-if has('nvim')
-  autocmd TermOpen * startinsert
-endif
-
-" insert magic commentary for ruby files
-nnoremap <leader>fr gg:-1read ~/.vim/snippets/magic-comment-ruby<CR>:w<CR><c-o>
-
-" create a new function in elixir mode
-nnoremap <leader>fun odef<space>public_function<space>do<cr>end<Esc>kwciw
-nnoremap <leader>fup odefp<space>private_function<space>do<cr>end<Esc>kwviwc
-nnoremap <leader>mod idefmodule<space>MyModule<space>do<cr>end<Esc>kwviwc
-
-" create a new method in ruby mode
-autocmd FileType ruby nnoremap met odef<space>method_name<cr>end<Esc>kwviwc
-autocmd FileType ruby nnoremap mcl iclass<space>MyClass<cr>end<Esc>kwviwc
-
-
-" format json
-" python -mjson.tool

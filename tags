@@ -4,3 +4,18 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+exports.activate	oni/config.js	/^exports.activate = function (oni) {$/;"	f
+exports.configuration.debug.neovimPath	oni/config.js	/^    "debug.neovimPath": "\/usr\/local\/bin\/nvim"$/;"	p
+exports.configuration.editor.fontFamily	oni/config.js	/^    "editor.fontFamily": "Source Code Pro for Powerline",$/;"	p
+exports.configuration.editor.fontSize	oni/config.js	/^    "editor.fontSize": "14px",$/;"	p
+exports.configuration.editor.fullScreenOnStart	oni/config.js	/^    "editor.fullScreenOnStart": true,$/;"	p
+exports.configuration.editor.scrollBar.visible	oni/config.js	/^    "editor.scrollBar.visible": false,$/;"	p
+exports.configuration.oni.loadInitVim	oni/config.js	/^    "oni.loadInitVim": true,$/;"	p
+exports.configuration.oni.useDefaultConfig	oni/config.js	/^    "oni.useDefaultConfig": false,$/;"	p
+exports.configuration.sidebar.enabled	oni/config.js	/^    "sidebar.enabled": false,$/;"	p
+exports.configuration.statusbar.enabled	oni/config.js	/^    "statusbar.enabled": false,$/;"	p
+exports.configuration.ui.animations.enabled	oni/config.js	/^    "ui.animations.enabled": true,$/;"	p
+exports.configuration.ui.colorscheme	oni/config.js	/^    "ui.colorscheme": "dracula",$/;"	p
+exports.configuration.ui.fontSmoothing	oni/config.js	/^    "ui.fontSmoothing": "auto",$/;"	p
+exports.configuration.workspace.defaultWorkspace	oni/config.js	/^    "workspace.defaultWorkspace": "\/Users\/joao\/workspace",$/;"	p
+exports.deactivate	oni/config.js	/^exports.deactivate = function (oni) {$/;"	f
