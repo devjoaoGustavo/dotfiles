@@ -1,0 +1,198 @@
+filetype off
+let skip_defaults_vim = 1
+
+call plug#begin('~/.vim/plugged')
+Plug 'wakatime/vim-wakatime'
+Plug 'kien/ctrlp.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'jremmen/vim-ripgrep'
+Plug 'jiangmiao/auto-pairs'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-surround'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
+Plug 'RRethy/vim-illuminate'
+Plug 'itchyny/lightline.vim'
+Plug 'fxn/vim-monochrome'
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
+call plug#end()
+
+filetype plugin indent on
+syntax on
+
+let g:monochrome_italic_comments = 1
+
+set termguicolors
+colorscheme monochrome
+
+let mapleader = " "
+
+if !has('nvim')
+  set t_ZH=[3m
+  set t_ZR=[23m
+  set t_Co=256
+  set t_ut=
+  set belloff=all
+  set autoindent
+  set fillchars=
+  set laststatus=2
+else
+  autocmd TermOpen * startinsert
+  set inccommand=nosplit
+  set backspace=
+endif
+
+set guicursor=
+set clipboard=
+set copyindent
+set expandtab
+set grepprg=rg\ --vimgrep\ $*
+set hidden
+set ignorecase
+set smartcase
+set modeline
+set modelines=3
+set nojoinspaces
+" Settings in order to use swap files
+set dir=/var/tmp
+set swapfile
+set updatecount=200
+set updatetime=300
+set shortmess+=c
+
+set nowritebackup
+set nrformats=
+set path+=**
+set nonumber
+set numberwidth=1
+set relativenumber
+set shiftround
+set shiftwidth=2
+set showmatch
+set signcolumn=auto
+set softtabstop=2
+set splitbelow
+set splitright
+set ttimeout timeoutlen=500
+set nowrap
+set autoread
+set autowrite
+set noshowmode
+set incsearch
+set hlsearch
+set showcmd
+set list
+set listchars=trail:∙
+set tags^=./.git/tags
+set textwidth=80
+
+" Things I don't want to delete 😂
+" set statusline=%<%f\ (%{&ft})%h%m%r%=%-14.(%l,%c%V%)
+" set winwidth=84
+" set winheight=5
+" set winminheight=5
+" set winheight=999
+
+hi ColorColumn term=reverse ctermfg=grey ctermbg=darkblue guibg=red guifg=black
+call matchadd('ColorColumn', '\%81v', 100)
+
+nnoremap <leader><leader> <c-^>
+tnoremap <Esc> <c-\><c-n>
+
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
+" Toggle NERDTree
+nnoremap <silent> <Leader>n :NERDTreeToggle<CR>
+nnoremap <silent> <Leader>f :NERDTreeFind<CR>
+
+" Remove all trailing space before save the buffer
+autocmd BufWritePre * :%s/\s\+$//e
+
+" Jump to last cursor position unless it's invalid or in an event handler
+autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+
+" Edit this vimrc file
+nnoremap <leader>fed :e ~/.vimrc<cr>
+nnoremap <leader>fer :so ~/.vimrc<cr>
+
+nnoremap <Up> :echo "Do not use arrows 🤬"<cr>
+nnoremap <Down> :echo "Do not use arrows 😤"<cr>
+nnoremap <Left> :echo "Do not use arrows 😡"<cr>
+nnoremap <Right> :echo "Do not use arrows 😠"<cr>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+nnoremap gs :Rg<space>
+nnoremap <leader>o :only<cr>
+nnoremap <leader>cf :let @+ = expand("%")<cr>
+
+nnoremap <leader>bb :ls<cr>
+nnoremap <leader>bq :bp <BAR> bd #<CR>
+nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gd :Gdiff<cr>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>hl :nohlsearch<CR>
+nnoremap <leader>sn :new<cr>
+nnoremap <leader>ss :sp<cr>
+nnoremap <leader>tc :tabclose<cr>
+nnoremap <leader>te :tabedit %<cr>
+nnoremap <leader>tn :tabnew<cr>
+nnoremap <leader>vn :vnew<cr>
+nnoremap <leader>vv :vs<cr>
+
+" language specifics
+" Ruby
+let g:ruby_indent_block_style = 'do'
+let g:ruby_indent_assignment_style = 'variable'
+" PHP
+autocmd FileType php setlocal shiftwidth=4 softtabstop=4
+" Python
+au! FileType python
+      \ setlocal tabstop=4 |
+      \ setlocal softtabstop=4 |
+      \ setlocal shiftwidth=4 |
+      \ setlocal textwidth=79 |
+      \ setlocal expandtab |
+      \ setlocal autoindent |
+      \ setlocal fileformat=unix
+" end of language customs
+
+" nerdtree customs
+let g:NERDTreeIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+
+let NERDTreeIgnore=['\.pyc$', '\~$']
+
+" gitgutter customs
+let g:gitgutter_preview_win_floating = 1
+
+" lightline customs
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ }
+
+" vim-illuminate's customs
+hi illuminatedWord cterm=underline gui=underline
