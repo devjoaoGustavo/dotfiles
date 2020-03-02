@@ -2,37 +2,46 @@ filetype off
 let skip_defaults_vim = 1
 
 call plug#begin('~/.vim/plugged')
-Plug 'wakatime/vim-wakatime'
-Plug 'kien/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'airblade/vim-gitgutter'
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'slashmili/alchemist.vim'
 Plug 'jremmen/vim-ripgrep'
-Plug 'jiangmiao/auto-pairs'
-Plug 'w0rp/ale'
+Plug 'kien/ctrlp.vim'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
-Plug 'RRethy/vim-illuminate'
-Plug 'itchyny/lightline.vim'
-Plug 'fxn/vim-monochrome'
-Plug 'racer-rust/vim-racer'
-Plug 'rust-lang/rust.vim'
+Plug 'w0rp/ale'
+Plug 'wakatime/vim-wakatime'
+Plug 'tricktux/vim-pomodoro'
+Plug 'mattn/webapi-vim'
+Plug 'nanotech/jellybeans.vim'
 call plug#end()
+
+packadd! matchit
+
+let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
+let g:ale_enabled = 0
+
 
 filetype plugin indent on
 syntax on
 
-let g:monochrome_italic_comments = 1
-
 set termguicolors
-colorscheme monochrome
+colorscheme jellybeans
+
+hi Comment    cterm=italic guifg=#5C6370 ctermfg=59
+hi Normal     ctermbg=NONE guibg=NONE
+hi LineNr     ctermbg=NONE guibg=NONE
+hi SignColumn ctermbg=NONE guibg=NONE
 
 let mapleader = " "
 
@@ -48,10 +57,11 @@ if !has('nvim')
 else
   autocmd TermOpen * startinsert
   set inccommand=nosplit
-  set backspace=
 endif
 
+set backspace=indent,eol,start
 set guicursor=
+
 set clipboard=
 set copyindent
 set expandtab
@@ -73,8 +83,8 @@ set nowritebackup
 set nrformats=
 set path+=**
 set nonumber
-set numberwidth=1
 set relativenumber
+set numberwidth=1
 set shiftround
 set shiftwidth=2
 set showmatch
@@ -86,24 +96,22 @@ set ttimeout timeoutlen=500
 set nowrap
 set autoread
 set autowrite
-set noshowmode
+set showmode
 set incsearch
 set hlsearch
 set showcmd
 set list
 set listchars=trail:∙
 set tags^=./.git/tags
-set textwidth=80
+" set statusline=
 
+" set statusline+=%{&modified?\"Modified\":\"\"}
+" set statusline=%<%f\ (%{&ft})%h\ %{&modified?\"🥶\":\"😃\"}%r%=%-14.(%l,%c%V%)
 " Things I don't want to delete 😂
-" set statusline=%<%f\ (%{&ft})%h%m%r%=%-14.(%l,%c%V%)
 " set winwidth=84
 " set winheight=5
 " set winminheight=5
 " set winheight=999
-
-hi ColorColumn term=reverse ctermfg=grey ctermbg=darkblue guibg=red guifg=black
-call matchadd('ColorColumn', '\%81v', 100)
 
 nnoremap <leader><leader> <c-^>
 tnoremap <Esc> <c-\><c-n>
@@ -136,6 +144,9 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 nnoremap gs :Rg<space>
+nnoremap gy :w<cr>
+nnoremap <Esc><Esc> :w<cr>
+nnoremap <c-q> :q<cr>
 nnoremap <leader>o :only<cr>
 nnoremap <leader>cf :let @+ = expand("%")<cr>
 
@@ -157,6 +168,15 @@ nnoremap <leader>vv :vs<cr>
 " Ruby
 let g:ruby_indent_block_style = 'do'
 let g:ruby_indent_assignment_style = 'variable'
+
+autocmd! Filetype ruby setlocal textwidth=80
+
+" hi ColorColumn term=reverse ctermfg=grey ctermbg=darkblue guibg=red guifg=black
+call matchadd('ColorColumn', '\%81v', 100)
+
+let g:ruby_host_prog = '/Users/joao.paula/.rvm/gems/ruby-2.7.0/bin/neovim-ruby-host'
+
+
 " PHP
 autocmd FileType php setlocal shiftwidth=4 softtabstop=4
 " Python
@@ -168,6 +188,17 @@ au! FileType python
       \ setlocal expandtab |
       \ setlocal autoindent |
       \ setlocal fileformat=unix
+
+let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8"
+
+"Rust
+let g:rustc_path = $HOME."/.cargo/bin/rustc"
+let g:rust_recommended_style = 1
+nnoremap <leader>rr :RustRun<cr>
+nnoremap <leader>rf :RustFmt<cr>
+nnoremap <leader>cr :Crun<cr>
+nnoremap <leader>cc :Ccheck<cr>
+nnoremap <leader>cb :Cbuild<cr>
 " end of language customs
 
 " nerdtree customs
@@ -188,11 +219,36 @@ let NERDTreeIgnore=['\.pyc$', '\~$']
 
 " gitgutter customs
 let g:gitgutter_preview_win_floating = 1
+nnoremap <leader>hn :GitGutterNextHunk<cr>
+nnoremap <leader>hb :GitGutterPrevHunk<cr>
 
-" lightline customs
-let g:lightline = {
-      \ 'colorscheme': 'nord',
-      \ }
+" " lightline customs
+" let g:lightline = {
+"       \ 'active': {
+"       \   'left': [ [ 'mode', 'paste' ],
+"       \             [ 'readonly', 'filename', 'modified', 'gitbranch', 'pomodoro' ] ],
+"       \   'right': [ [ 'lineinfo' ],
+"       \              [ 'percent' ],
+"       \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
+"       \   },
+"       \   'component_function': {
+"       \     'gitbranch': 'FugitiveHead',
+"       \     'pomodoro': 'ShowPomodoroStatus'
+"       \   },
+"       \   'colorscheme': 'gruvbox_material'
+"       \ }
 
-" vim-illuminate's customs
-hi illuminatedWord cterm=underline gui=underline
+" Pomodoro customs
+let g:pomodoro_time_work = 30
+let g:pomodoro_time_slack = 5
+
+nnoremap gpm :PomodoroStart<cr>
+nnoremap gm :PomodoroStatus<cr>
+nnoremap gps :PomodoroStop<cr>
+
+function! ShowPomodoroStatus()
+  redir => status
+  silent exec 'PomodoroStatus'
+  redir END
+  return status
+endfunction
