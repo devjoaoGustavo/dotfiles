@@ -2,6 +2,7 @@ filetype off
 let skip_defaults_vim = 1
 
 call plug#begin('~/.vim/plugged')
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-gitgutter'
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
@@ -25,34 +26,27 @@ Plug 'tricktux/vim-pomodoro'
 Plug 'mattn/webapi-vim'
 Plug 'Thinca/vim-quickrun'
 Plug 'nanotech/jellybeans.vim'
-Plug 'jacoborus/tender.vim'
-Plug 'huyvohcmc/atlas.vim'
-Plug 'maksimr/Lucius2'
-Plug 'Yggdroot/indentLine'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'tpope/vim-repeat'
+Plug 'git@github.com:PhilRunninger/bufselect.vim.git'
+Plug 'terryma/vim-expand-region'
 call plug#end()
-
-let g:indentLine_color_term = 239
-let g:indentLine_char = 'c'
-let g:indentLine_char_list = ['|', '¦', '┆', '┊']
-let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 2
 
 packadd! matchit
 
 let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
 let g:ale_enabled = 0
 
-
 filetype plugin indent on
 syntax on
 
 set termguicolors
-colorscheme lucius
+colorscheme onehalfdark
 
-hi Comment    cterm=italic guifg=#5C6370 ctermfg=59
-hi Normal     ctermbg=NONE guibg=NONE
-hi LineNr     ctermbg=NONE guibg=NONE
-hi SignColumn ctermbg=NONE guibg=NONE
+" hi Comment    cterm=italic guifg=#5C6370 ctermfg=59
+" hi Normal     ctermbg=NONE guibg=NONE
+" hi LineNr     ctermbg=NONE guibg=NONE
+" hi SignColumn ctermbg=NONE guibg=NONE
 
 let mapleader = " "
 
@@ -70,7 +64,8 @@ else
   set inccommand=nosplit
 endif
 
-set backspace=indent,eol,start
+set backspace=
+" set backspace=indent,eol,start
 set guicursor=
 
 set clipboard=
@@ -95,7 +90,7 @@ set shortmess+=cS
 set nowritebackup
 set nrformats=
 set path+=**
-set nonumber
+set number
 set relativenumber
 set numberwidth=1
 set shiftround
@@ -118,7 +113,7 @@ set listchars=trail:∙
 set tags^=./.git/tags
 
 " set statusline+=%{&modified?\"Modified\":\"\"}
-" set statusline=%<%f\ (%{&ft})%h\ %{&modified?\"🥶\":\"😃\"}%r%=%-14.(%l,%c%V%)
+set statusline=%<%f\ (%{&ft})%h\ %{&modified?\"🥶\":\"😃\"}%r%=%-14.(%l,%c%V%)
 " Things I don't want to delete 😂
 " set winwidth=84
 " set winheight=5
@@ -161,7 +156,7 @@ nnoremap <c-q> :q<cr>
 nnoremap <leader>o :only<cr>
 nnoremap <leader>cf :let @+ = expand("%")<cr>
 
-nnoremap <leader>bb :ls<cr>
+nnoremap <leader>l :ShowBufferList<cr>
 nnoremap <leader>bq :bp <BAR> bd #<CR>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>gd :Gdiff<cr>
@@ -203,13 +198,16 @@ au! FileType python
 let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8"
 
 "Rust
-let g:rustc_path = $HOME."/.cargo/bin/rustc"
+let g:rustc_path = $HOME."/.asdf/shims/rustc"
 let g:rust_recommended_style = 1
 nnoremap <leader>rr :RustRun<cr>
 nnoremap <leader>rf :RustFmt<cr>
 nnoremap <leader>cr :Crun<cr>
 nnoremap <leader>cc :Ccheck<cr>
 nnoremap <leader>cb :Cbuild<cr>
+
+" Elixir
+nnoremap <leader>gf :Mix format %<cr>
 " end of language customs
 
 let NERDTreeIgnore=['\.pyc$', '\~$']
@@ -227,3 +225,17 @@ nnoremap gpm :PomodoroStart<cr>
 nnoremap gm :PomodoroStatus<cr>
 nnoremap gps :PomodoroStop<cr>
 " end of Pomodoro customs
+
+" Expand region customs
+let g:expand_region_text_objects = {
+      \ 'iw'  :0,
+      \ 'iW'  :0,
+      \ 'i"'  :0,
+      \ 'i''' :0,
+      \ 'i]'  :1,
+      \ 'ib'  :1,
+      \ 'iB'  :1,
+      \ 'il'  :0,
+      \ 'ip'  :0,
+      \ 'ie'  :1,
+      \ }
