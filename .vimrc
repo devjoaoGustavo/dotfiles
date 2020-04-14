@@ -2,34 +2,42 @@ filetype off
 let skip_defaults_vim = 1
 
 call plug#begin('~/.vim/plugged')
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'airblade/vim-gitgutter'
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'slashmili/alchemist.vim'
-Plug 'jremmen/vim-ripgrep'
-Plug 'kien/ctrlp.vim'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'racer-rust/vim-racer'
-Plug 'rust-lang/rust.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-rails'
 Plug 'tpope/vim-surround'
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'w0rp/ale'
+Plug 'tpope/vim-repeat'
+Plug 'kien/ctrlp.vim'
+
+" PRODUCTIVITY
 Plug 'wakatime/vim-wakatime'
 Plug 'tricktux/vim-pomodoro'
-Plug 'mattn/webapi-vim'
-Plug 'Thinca/vim-quickrun'
-Plug 'nanotech/jellybeans.vim'
+
+" STYLES
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
-Plug 'tpope/vim-repeat'
+
+" FILES
+" Plug 'christoomey/vim-tmux-navigator'
+Plug 'jremmen/vim-ripgrep'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'git@github.com:PhilRunninger/bufselect.vim.git'
-Plug 'terryma/vim-expand-region'
+
+" GIT
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+
+" LANGUAGES
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'w0rp/ale'
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
+" Plug 'Thinca/vim-quickrun'
+Plug 'mattn/webapi-vim'
+Plug 'slashmili/alchemist.vim'
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails'
+Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
 call plug#end()
 
 packadd! matchit
@@ -50,35 +58,31 @@ colorscheme onehalfdark
 
 let mapleader = " "
 
-if !has('nvim')
-  set t_ZH=[3m
-  set t_ZR=[23m
-  set t_Co=256
-  set t_ut=
-  set belloff=all
-  set autoindent
-  set fillchars=
-  set laststatus=2
-else
+if has('nvim')
   autocmd TermOpen * startinsert
   set inccommand=nosplit
 endif
 
-set backspace=
-" set backspace=indent,eol,start
-set guicursor=
+set t_ZH=[3m
+set t_ZR=[23m
+set t_Co=256
+set t_ut=
 
-set clipboard=
+set autoindent
 set copyindent
 set expandtab
+set fillchars=stlnc:=,vert:\|,fold:-,diff:-
+set laststatus=1
+set backspace=   " set backspace=indent,eol,start
+" set guicursor=
+" set clipboard=
 set grepprg=rg\ --vimgrep\ $*
-set hidden
+set nohidden
 set ignorecase
 set smartcase
 set modeline
 set modelines=3
 set nojoinspaces
-
 " Settings in order to use swap files
 " set dir=/var/tmp
 set noswapfile
@@ -87,38 +91,39 @@ set noswapfile
 
 set shortmess+=cS
 
+set shiftround
+set softtabstop=2
+set shiftwidth=2
+
 set nowritebackup
 set nrformats=
-set path+=**
+set path=,,
 set number
 set relativenumber
 set numberwidth=1
-set shiftround
-set shiftwidth=2
 set showmatch
 set signcolumn=auto
-set softtabstop=2
 set splitbelow
 set splitright
 set ttimeout timeoutlen=500
 set nowrap
 set autoread
-set autowrite
+set autowriteall
 set showmode
 set incsearch
 set hlsearch
 set showcmd
-set list
-set listchars=trail:∙
+set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set tags^=./.git/tags
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
 
-" set statusline+=%{&modified?\"Modified\":\"\"}
-set statusline=%<%f\ (%{&ft})%h\ %{&modified?\"🥶\":\"😃\"}%r%=%-14.(%l,%c%V%)
-" Things I don't want to delete 😂
-" set winwidth=84
-" set winheight=5
-" set winminheight=5
-" set winheight=999
+" toggle list flag in order to display characters for space, tab eol, etc...
+nnoremap <leader>m :set invlist<cr>
+
+set winwidth=84
+set winheight=5
+set winminheight=5
+set winheight=999
 
 nnoremap <leader><leader> <c-^>
 tnoremap <Esc> <c-\><c-n>
