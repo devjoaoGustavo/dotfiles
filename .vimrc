@@ -1,60 +1,13 @@
 filetype off
 let skip_defaults_vim = 1
 
-call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'kien/ctrlp.vim'
+if filereadable(expand('~/.vim/conf/plugins.vim'))
+  source ~/.vim/conf/plugins.vim
+end
 
-" PRODUCTIVITY
-Plug 'wakatime/vim-wakatime'
-Plug 'tricktux/vim-pomodoro'
-
-" STYLES
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
-
-" FILES
-" Plug 'christoomey/vim-tmux-navigator'
-Plug 'jremmen/vim-ripgrep'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'git@github.com:PhilRunninger/bufselect.vim.git'
-
-" GIT
-Plug 'airblade/vim-gitgutter'
-Plug 'tpope/vim-fugitive'
-
-" LANGUAGES
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'w0rp/ale'
-Plug 'racer-rust/vim-racer'
-Plug 'rust-lang/rust.vim'
-" Plug 'Thinca/vim-quickrun'
-Plug 'mattn/webapi-vim'
-Plug 'slashmili/alchemist.vim'
-Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails'
-Plug 'mattn/emmet-vim', { 'for': ['html', 'eruby'] }
-call plug#end()
-
-packadd! matchit
-
-let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
-let g:ale_enabled = 0
-
-filetype plugin indent on
-syntax on
-
-set termguicolors
-colorscheme onehalfdark
-
-" hi Comment    cterm=italic guifg=#5C6370 ctermfg=59
-" hi Normal     ctermbg=NONE guibg=NONE
-" hi LineNr     ctermbg=NONE guibg=NONE
-" hi SignColumn ctermbg=NONE guibg=NONE
+if filereadable(expand('~/.vim/conf/color_conf.vim'))
+  source ~/.vim/conf/color_conf.vim
+end
 
 let mapleader = " "
 
@@ -72,10 +25,8 @@ set autoindent
 set copyindent
 set expandtab
 set fillchars=stlnc:=,vert:\|,fold:-,diff:-
-set laststatus=1
-set backspace=   " set backspace=indent,eol,start
-" set guicursor=
-" set clipboard=
+set laststatus=2
+set backspace=
 set grepprg=rg\ --vimgrep\ $*
 set nohidden
 set ignorecase
@@ -83,11 +34,7 @@ set smartcase
 set modeline
 set modelines=3
 set nojoinspaces
-" Settings in order to use swap files
-" set dir=/var/tmp
 set noswapfile
-" set updatecount=200
-" set updatetime=300
 
 set shortmess+=cS
 
@@ -95,12 +42,12 @@ set shiftround
 set softtabstop=2
 set shiftwidth=2
 
+set nobackup
 set nowritebackup
 set nrformats=
 set path=,,
 set number
-set relativenumber
-set numberwidth=1
+set norelativenumber
 set showmatch
 set signcolumn=auto
 set splitbelow
@@ -115,7 +62,13 @@ set hlsearch
 set showcmd
 set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set tags^=./.git/tags
+
 set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
+
+set scrolloff=5
+
+set title
+set visualbell
 
 " toggle list flag in order to display characters for space, tab eol, etc...
 nnoremap <leader>m :set invlist<cr>
@@ -124,6 +77,9 @@ set winwidth=84
 set winheight=5
 set winminheight=5
 set winheight=999
+
+set wildmenu
+set wildmode=list:longest
 
 nnoremap <leader><leader> <c-^>
 tnoremap <Esc> <c-\><c-n>
@@ -177,6 +133,9 @@ nnoremap <leader>vv :vs<cr>
 
 " language specifics
 " Ruby
+let $RUBYHOME=$HOME."/.asdf/installs/ruby/2.7.1"
+set rubydll=$HOME/.asdf/installs/ruby/2.7.1/lib/libruby.2.7.dylib
+
 let g:ruby_indent_block_style = 'do'
 let g:ruby_indent_assignment_style = 'variable'
 
