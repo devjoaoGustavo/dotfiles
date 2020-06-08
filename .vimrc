@@ -73,10 +73,10 @@ set visualbell
 " toggle list flag in order to display characters for space, tab eol, etc...
 nnoremap <leader>m :set invlist<cr>
 
-set winwidth=84
-set winheight=5
-set winminheight=5
-set winheight=999
+" set winwidth=84
+" set winheight=5
+" set winminheight=5
+" set winheight=999
 
 set wildmenu
 set wildmode=list:longest

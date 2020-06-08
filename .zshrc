@@ -90,7 +90,7 @@ export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
 # fi
-export PROMPT='%2~ %{$fg[blue]%}λ%b '
+export PROMPT='%2~ %{$fg[green]%}$(current_branch) %{$fg[cyan]%}λ%b '
 
 # export ZSH_TMUX_UNICODE=true
 # export ZSH_TMUX_AUTOCONNECT=true
