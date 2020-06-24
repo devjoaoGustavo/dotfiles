@@ -35,6 +35,12 @@ set modeline
 set modelines=3
 set nojoinspaces
 set noswapfile
+set mouse=nvi
+
+map <ScrollWheelUp> <C-Y>
+map <S-ScrollWheelUp> <C-U>
+map <ScrollWheelDown> <C-E>
+map <S-ScrollWheelDown> <C-D>
 
 set shortmess+=cS
 
@@ -63,12 +69,10 @@ set showcmd
 set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set tags^=./.git/tags
 
-set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
-
-set scrolloff=5
+set statusline=%<%f\ %h%m%r%=%y%=%B\ -\ %O%=%-14.(%l,%c%V%)\ %P
 
 set title
-set visualbell
+set novisualbell
 
 " toggle list flag in order to display characters for space, tab eol, etc...
 nnoremap <leader>m :set invlist<cr>
@@ -84,6 +88,7 @@ set wildmode=list:longest
 nnoremap <leader><leader> <c-^>
 tnoremap <Esc> <c-\><c-n>
 
+let g:ctrlp_map = '<c-t>'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Toggle NERDTree
@@ -125,16 +130,17 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>hl :nohlsearch<CR>
 nnoremap <leader>sn :new<cr>
 nnoremap <leader>ss :sp<cr>
-nnoremap <leader>tc :tabclose<cr>
-nnoremap <leader>te :tabedit %<cr>
-nnoremap <leader>tn :tabnew<cr>
+nnoremap <c-p> :bnext<cr>
+nnoremap <c-n> :bprevious<cr>
 nnoremap <leader>vn :vnew<cr>
 nnoremap <leader>vv :vs<cr>
 
 " language specifics
 " Ruby
-let $RUBYHOME=$HOME."/.asdf/installs/ruby/2.7.1"
-set rubydll=$HOME/.asdf/installs/ruby/2.7.1/lib/libruby.2.7.dylib
+if (! has('nvim'))
+  let $RUBYHOME=$HOME."/.asdf/installs/ruby/2.7.1"
+  set rubydll=$HOME/.asdf/installs/ruby/2.7.1/lib/libruby.2.7.dylib
+endif
 
 let g:ruby_indent_block_style = 'do'
 let g:ruby_indent_assignment_style = 'variable'

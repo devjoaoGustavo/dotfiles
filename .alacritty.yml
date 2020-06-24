@@ -1,64 +1,188 @@
-# shell:
-#   program: /usr/local/bin/tmux
-#   args:
-#     - -u
+shell:
+  program: /bin/zsh
+  args:
+    - --login
+    - -c
+    - "tmux attach || tmux"
+
+mouse:
+  double_click: { threshold: 300 }
+  triple_click: { threshold: 300 }
+  hide_when_typing: true
+
+selection:
+  semantic_escape_chars: ",|`|:\"' ()[]{}<>"
+  save_to_clipbord: true
+
+window:
+  dimensions:
+    columns: 150
+    lines: 85
+    padding:
+      x: 0
+      y: 0
+    dynamic_padding: false
+    decoration: full
+    startup_mode: Windowed
+
+scrolling:
+  history: 0
+  multiplier: 3
+
+draw_bold_text_with_bright_colors: false
 
 # Font configuration (changes require restart)
 font:
   size: 14.0
   # The normal (roman) font face to use.
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  use_thin_strokes: true
+
   normal:
-    family: Source Code Pro for Powerline
+    family: Iosevka
+    # family: Source Code Pro for Powerline
     # Style can be specified to pick a specific face.
-    style: Regular
+    style: Light
+    # style: Regular
 
   # The bold font face
   bold:
-    family: Source Code Pro for Powerline
+    family: Iosevka
+    # family: Source Code Pro for Powerline
     # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Source Code Pro for Powerline
+    family: Iosevka
+    # family: Source Code Pro for Powerline
     # Style can be specified to pick a specific face.
     style: Italic
 
-# Colors (Jellybeans)
-colors:
-  # Default colors
-  primary:
-    background: '#161616'
-    foreground: '#e4e4e4'
+schemes:
+  dracula: &dracula
+    primary:
+      background: '#282a36'
+      foreground: '#f8f8f2'
+    normal:
+      black:   '#000000'
+      red:     '#ff5555'
+      green:   '#50fa7b'
+      yellow:  '#f1fa8c'
+      blue:    '#caa9fa'
+      magenta: '#ff79c6'
+      cyan:    '#8be9fd'
+      white:   '#bfbfbf'
+    bright:
+      black:   '#575b70'
+      red:     '#ff6e67'
+      green:   '#5af78e'
+      yellow:  '#f4f99d'
+      blue:    '#caa9fa'
+      magenta: '#ff92d0'
+      cyan:    '#9aedfe'
+      white:   '#e6e6e6'
+  base16_default_dark: &base16_default_dark
+    primary:
+      background: '#181818'
+      foreground: '#d8d8d8'
+    cursor:
+      text: '#d8d8d8'
+      cursor: '#d8d8d8'
+    normal:
+      black:   '#181818'
+      red:     '#ab4642'
+      green:   '#a1b56c'
+      yellow:  '#f7ca88'
+      blue:    '#7cafc2'
+      magenta: '#ba8baf'
+      cyan:    '#86c1b9'
+      white:   '#d8d8d8'
+    bright:
+      black:   '#585858'
+      red:     '#ab4642'
+      green:   '#a1b56c'
+      yellow:  '#f7ca88'
+      blue:    '#7cafc2'
+      magenta: '#ba8baf'
+      cyan:    '#86c1b9'
+      white:   '#f8f8f8'
+  jellybeans: &jellybeans
+    primary:
+      background: '#161616'
+      foreground: '#e4e4e4'
+    cursor:
+      text: '#feffff'
+      cursor: '#ffb472'
+    normal:
+      black:   '#a3a3a3'
+      red:     '#e98885'
+      green:   '#a3c38b'
+      yellow:  '#ffc68d'
+      blue:    '#a6cae2'
+      magenta: '#e7cdfb'
+      cyan:    '#00a69f'
+      white:   '#e4e4e4'
+    bright:
+      black:   '#c8c8c8'
+      red:     '#ffb2b0'
+      green:   '#c8e2b9'
+      yellow:  '#ffe1af'
+      blue:    '#bddff7'
+      magenta: '#fce2ff'
+      cyan:    '#0bbdb6'
+      white:   '#feffff'
+    selection:
+      text: '#5963a2'
+      background: '#f6f6f6'
+  gruvbox_light: &gruvbox_light
+    primary:
+      background: '#fbf1c7'
+      foreground: '#3c3836'
+    normal:
+      black:   '#fbf1c7'
+      red:     '#cc241d'
+      green:   '#98971a'
+      yellow:  '#d79921'
+      blue:    '#458588'
+      magenta: '#b16286'
+      cyan:    '#689d6a'
+      white:   '#7c6f64'
+    bright:
+      black:   '#928374'
+      red:     '#9d0006'
+      green:   '#79740e'
+      yellow:  '#b57614'
+      blue:    '#076678'
+      magenta: '#8f3f71'
+      cyan:    '#427b58'
+      white:   '#3c3836'
+  gruvbox_dark: &gruvbox_dark
+    primary:
+      background: '#282828'
+      foreground: '#ebdbb2'
+    normal:
+      black:   '#282828'
+      red:     '#cc241d'
+      green:   '#98971a'
+      yellow:  '#d79921'
+      blue:    '#458588'
+      magenta: '#b16286'
+      cyan:    '#689d6a'
+      white:   '#a89984'
+    bright:
+      black:   '#928374'
+      red:     '#fb4934'
+      green:   '#b8bb26'
+      yellow:  '#fabd2f'
+      blue:    '#83a598'
+      magenta: '#d3869b'
+      cyan:    '#8ec07c'
+      white:   '#ebdbb2'
 
-  # Cursor volors
-  cursor:
-    text: '#feffff'
-    cursor: '#ffb472'
-
-  # Normal colors
-  normal:
-    black:   '#a3a3a3'
-    red:     '#e98885'
-    green:   '#a3c38b'
-    yellow:  '#ffc68d'
-    blue:    '#a6cae2'
-    magenta: '#e7cdfb'
-    cyan:    '#00a69f'
-    white:   '#e4e4e4'
-
-  # Bright colors
-  bright:
-    black:   '#c8c8c8'
-    red:     '#ffb2b0'
-    green:   '#c8e2b9'
-    yellow:  '#ffe1af'
-    blue:    '#bddff7'
-    magenta: '#fce2ff'
-    cyan:    '#0bbdb6'
-    white:   '#feffff'
-
-  # Selection colors
-  selection:
-    text: '#5963a2'
-    background: '#f6f6f6'
+colors: *gruvbox_dark
