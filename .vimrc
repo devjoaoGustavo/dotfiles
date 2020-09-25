@@ -1,13 +1,61 @@
 filetype off
 let skip_defaults_vim = 1
 
-if filereadable(expand('~/.vim/conf/plugins.vim'))
-  source ~/.vim/conf/plugins.vim
-end
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree'
 
-if filereadable(expand('~/.vim/conf/color_conf.vim'))
-  source ~/.vim/conf/color_conf.vim
-end
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+
+Plug 'jiangmiao/auto-pairs'
+Plug 'kien/ctrlp.vim'
+
+Plug 'wakatime/vim-wakatime'
+
+Plug 'arcticicestudio/nord-vim'
+Plug 'cormacrelf/vim-colors-github'
+
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'jremmen/vim-ripgrep'
+
+" LANGUAGES
+Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
+Plug 'fatih/vim-go'
+Plug 'hashivim/vim-terraform'
+Plug 'jparise/vim-graphql'
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'pangloss/vim-javascript'
+Plug 'slashmili/alchemist.vim'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+" Plug 'w0rp/ale'
+
+call plug#end()
+
+packadd! matchit
+
+let g:user_emmet_install_global = 1
+let g:user_emmet_leader_key='<C-x>'
+let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
+let g:terraform_fmt_on_save=1
+
+let g:ale_enabled = 1
+let g:ale_linters = {
+      \ 'go': ['gopls'],
+      \ }
+
+filetype plugin indent on
+
+syntax on
+
+set termguicolors
+set background=light
+
+colorscheme grb24bit
+hi Normal guibg=NONE ctermbg=NONE
+hi NonText ctermbg=NONE
 
 let mapleader = " "
 
@@ -24,7 +72,7 @@ set t_ut=
 set autoindent
 set copyindent
 set expandtab
-set fillchars=stlnc:=,vert:\|,fold:-,diff:-
+set fillchars=stlnc:\ ,vert:┃,fold:-,diff:-
 set laststatus=2
 set backspace=
 set grepprg=rg\ --vimgrep\ $*
@@ -36,7 +84,7 @@ set modelines=3
 set nojoinspaces
 set noswapfile
 set mouse=nvi
-
+set guicursor=
 map <ScrollWheelUp> <C-Y>
 map <S-ScrollWheelUp> <C-U>
 map <ScrollWheelDown> <C-E>
@@ -51,8 +99,8 @@ set shiftwidth=2
 set nobackup
 set nowritebackup
 set nrformats=
-set path=,,
-set number
+set path=.,,app/**
+set nonumber
 set norelativenumber
 set showmatch
 set signcolumn=auto
@@ -77,18 +125,12 @@ set novisualbell
 " toggle list flag in order to display characters for space, tab eol, etc...
 nnoremap <leader>m :set invlist<cr>
 
-" set winwidth=84
-" set winheight=5
-" set winminheight=5
-" set winheight=999
-
 set wildmenu
 set wildmode=list:longest
 
 nnoremap <leader><leader> <c-^>
 tnoremap <Esc> <c-\><c-n>
 
-let g:ctrlp_map = '<c-t>'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " Toggle NERDTree
@@ -102,9 +144,16 @@ autocmd BufWritePre * :%s/\s\+$//e
 autocmd BufReadPost *
       \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
 
+let g:go_fmt_autosave = 1
+let g:go_imports_autosave = 1
+let g:go_mod_fmt_autosave = 1
+let g:go_doc_popup_window = 1
+
 " Edit this vimrc file
 nnoremap <leader>fed :e ~/.vimrc<cr>
 nnoremap <leader>fer :so ~/.vimrc<cr>
+nnoremap <leader>cf :let @+ = expand("%")<cr>
+nnoremap <leader>hl :nohlsearch<CR>
 
 nnoremap <Up> :echo "Do not use arrows 🤬"<cr>
 nnoremap <Down> :echo "Do not use arrows 😤"<cr>
@@ -115,25 +164,6 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-
-nnoremap gs :Rg<space>
-nnoremap gy :w<cr>
-nnoremap <c-q> :q<cr>
-nnoremap <leader>o :only<cr>
-nnoremap <leader>cf :let @+ = expand("%")<cr>
-
-nnoremap <leader>l :ShowBufferList<cr>
-nnoremap <leader>bq :bp <BAR> bd #<CR>
-nnoremap <leader>gb :Gblame<cr>
-nnoremap <leader>gd :Gdiff<cr>
-nnoremap <leader>gs :Gstatus<cr>
-nnoremap <leader>hl :nohlsearch<CR>
-nnoremap <leader>sn :new<cr>
-nnoremap <leader>ss :sp<cr>
-nnoremap <c-p> :bnext<cr>
-nnoremap <c-n> :bprevious<cr>
-nnoremap <leader>vn :vnew<cr>
-nnoremap <leader>vv :vs<cr>
 
 " language specifics
 " Ruby
@@ -147,13 +177,23 @@ let g:ruby_indent_assignment_style = 'variable'
 
 au! Filetype ruby setlocal textwidth=80
 
-hi ColorColumn term=reverse ctermfg=grey ctermbg=darkblue guibg=gray guifg=white
-call matchadd('ColorColumn', '\%81v', 100)
+" hi ColorColumn term=reverse ctermfg=grey ctermbg=darkblue guibg=gray guifg=white
+" call matchadd('ColorColumn', '\%81v', 100)
 
-let g:ruby_host_prog = '/Users/joao.paula/.rvm/gems/ruby-2.7.0/bin/neovim-ruby-host'
+let g:ruby_host_prog = '/Users/joao.paula/.asdf/installs/ruby/2.6.5/bin/neovim-ruby-host'
 
 " PHP
 au! FileType php setlocal shiftwidth=4 softtabstop=4
+
+" Golang
+au! FileType go
+      \ setlocal tabstop=8 |
+      \ setlocal softtabstop=8 |
+      \ setlocal shiftwidth=8 |
+      \ setlocal textwidth=79 |
+      \ setlocal noexpandtab |
+      \ setlocal autoindent |
+      \ setlocal fileformat=unix
 
 " Python
 au! FileType python
@@ -167,34 +207,7 @@ au! FileType python
 
 let g:python3_host_prog = "/Library/Frameworks/Python.framework/Versions/3.8/bin/python3.8"
 
-"Rust
-let g:rustc_path = $HOME."/.asdf/shims/rustc"
-let g:rust_recommended_style = 1
-nnoremap <leader>rr :RustRun<cr>
-nnoremap <leader>rf :RustFmt<cr>
-nnoremap <leader>cr :Crun<cr>
-nnoremap <leader>cc :Ccheck<cr>
-nnoremap <leader>cb :Cbuild<cr>
-
-" Elixir
-nnoremap <leader>gf :Mix format %<cr>
-" end of language customs
-
 let NERDTreeIgnore=['\.pyc$', '\~$']
-
-" gitgutter customs
-let g:gitgutter_preview_win_floating = 1
-nnoremap <leader>hn :GitGutterNextHunk<cr>
-nnoremap <leader>hb :GitGutterPrevHunk<cr>
-" end of gitgutter customs
-
-" Pomodoro customs
-let g:pomodoro_time_work = 30
-let g:pomodoro_time_slack = 5
-nnoremap gpm :PomodoroStart<cr>
-nnoremap gm :PomodoroStatus<cr>
-nnoremap gps :PomodoroStop<cr>
-" end of Pomodoro customs
 
 " Expand region customs
 let g:expand_region_text_objects = {
