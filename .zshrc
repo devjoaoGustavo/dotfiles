@@ -1,14 +1,22 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/joao.paula/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="minimal"
+# ZSH_THEME="minimal"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,7 +77,6 @@ ZSH_THEME="minimal"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  tig
   git
   osx
   ruby
@@ -90,29 +97,18 @@ export EDITOR='vim'
 # else
 #   export EDITOR='mvim'
 # fi
-export PROMPT='%2~ %{$fg[green]%}$(current_branch) %{$fg[cyan]%}λ%b '
+# export PROMPT='%2~ %{$fg[green]%}$(current_branch) %{$fg[cyan]%}λ%b '
 
 # export ZSH_TMUX_UNICODE=true
 # export ZSH_TMUX_AUTOCONNECT=true
 # export ZSH_TMUX_AUTOSTART=true
-export DISABLE_AUTO_TITLE=true
+# export DISABLE_AUTO_TITLE=true
 export TERM=xterm-256color
+
 # return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 # host_color="%(!.%{$fg[red]%}.%{$fg[green]%})"
 
-# PROMPT="${host_color}%m%{$reset_color%} %2~ \$(git_prompt_info)%{$reset_color%}%B»%b "
-
-# export GITHUB_TOKEN=36a387c25e0bf7ef6b84c72054f9062acbd8a5a6
-# export LIBZMQ_PATH=/usr/local/opt/zeromq/lib
-# export LIBCZMQ_PATH=/usr/local/opt/czmq/lib
-# export PATH="/usr/local/opt/bison/bin:$PATH"
-# export PATH="/usr/local/opt/curl/bin:$PATH"
-# export PATH="/usr/local/sbin:$PATH"
-# export GOOGLE_APPLICATION_CREDENTIALS="/Users/joao.paula/Downloads/billion-36f889ea0ae7.json"
-# export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
-# export PATH="/Library/Frameworks/Python.framework/Versions/3.7/bin:${PATH}"
-
-export PATH="/Users/joao.paula/bin:${PATH}"
+PROMPT="${host_color}%m%{$reset_color%} %2~ \$(git_prompt_info)%{$reset_color%}%B»%b "
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -128,14 +124,31 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+# if [ -f '$HOME/.aliasesrc' ]; then
+#   source '$HOME/.aliasesrc'
+# fi
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/joao.paula/Downloads/google-cloud-sdk/path.zsh.inc' ]; then
-  . '/Users/joao.paula/Downloads/google-cloud-sdk/path.zsh.inc';
-fi
+# authn-frontend
+export PATH="$PATH:$HOME/workspace/cargox/authn-frontend/scripts"
 
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/joao.paula/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then
-  . '/Users/joao.paula/Downloads/google-cloud-sdk/completion.zsh.inc';
-fi
-export PATH="/usr/local/sbin:$PATH"
+# cargoforce-frontend
+export PATH="$PATH:$HOME/workspace/cargox/cargoforce-frontend/scripts"
+
+# bubbie
+export PATH="$PATH:$HOME/workspace/cargox/bubbie/bin"
+
+export GITHUB_TOKEN=5226d68f8003f9001fef76464b7d0ba53d1a1139
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
+
+export LC_ALL="C"
+export LANG="en_BR.UTF-8"
+export AWS_REGION=us-east-1
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# eval "$(starship init zsh)"
+
+alias v="/usr/local/Cellar/vim/8.2.1800_1/bin/vim"
+

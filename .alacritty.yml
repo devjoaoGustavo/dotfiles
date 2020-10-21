@@ -44,24 +44,26 @@ font:
   use_thin_strokes: true
 
   normal:
-    family: Iosevka
+    # family: Iosevka
+    # family: Hack Nerd Font
+    family: MesloLGS NF
     # family: Source Code Pro for Powerline
-    # Style can be specified to pick a specific face.
-    style: Light
-    # style: Regular
+    style: Regular
 
   # The bold font face
   bold:
-    family: Iosevka
+    # family: Iosevka
+    # family: Hack Nerd Font
+    family: MesloLGS NF
     # family: Source Code Pro for Powerline
-    # Style can be specified to pick a specific face.
     style: Bold
 
   # The italic font face
   italic:
-    family: Iosevka
+    # family: Iosevka
+    # family: Hack Nerd Font
+    family: MesloLGS NF
     # family: Source Code Pro for Powerline
-    # Style can be specified to pick a specific face.
     style: Italic
 
 schemes:
@@ -116,9 +118,9 @@ schemes:
     primary:
       background: '#161616'
       foreground: '#e4e4e4'
-    cursor:
-      text: '#feffff'
-      cursor: '#ffb472'
+    # cursor:
+    #   text: '#feffff'
+    #   cursor: '#ffb472'
     normal:
       black:   '#a3a3a3'
       red:     '#e98885'
@@ -184,5 +186,105 @@ schemes:
       magenta: '#d3869b'
       cyan:    '#8ec07c'
       white:   '#ebdbb2'
+  pencil_light: &pencil_light
+    primary:
+      background: '0xf1f1f1'
+      foreground: '0x424242'
+    normal:
+      black:   '0x212121'
+      red:     '0xc30771'
+      green:   '0x10a778'
+      yellow:  '0xa89c14'
+      blue:    '0x008ec4'
+      magenta: '0x523c79'
+      cyan:    '0x20a5ba'
+      white:   '0xe0e0e0'
+    bright:
+      black:   '0x212121'
+      red:     '0xfb007a'
+      green:   '0x5fd7af'
+      yellow:  '0xf3e430'
+      blue:    '0x20bbfc'
+      magenta: '0x6855de'
+      cyan:    '0x4fb8cc'
+      white:   '0xf1f1f1'
+  solarized_light: &solarized_light
+    primary:
+      background: '0xfdf6e3'
+      foreground: '0x586e75'
+    normal:
+      black:   '0x073642'
+      red:     '0xdc322f'
+      green:   '0x859900'
+      yellow:  '0xb58900'
+      blue:    '0x268bd2'
+      magenta: '0xd33682'
+      cyan:    '0x2aa198'
+      white:   '0xeee8d5'
+    bright:
+      black:   '0x002b36'
+      red:     '0xcb4b16'
+      green:   '0x586e75'
+      yellow:  '0x657b83'
+      blue:    '0x839496'
+      magenta: '0x6c71c4'
+      cyan:    '0x93a1a1'
+      white:   '0xfdf6e3'
+  nord: &nord
+    primary:
+      background: '0x2E3440'
+      foreground: '0xD8DEE9'
+    cursor:
+      text: '0x2E3440'
+      cursor: '0xD8DEE9'
+    normal:
+      black: '0x3B4252'
+      red: '0xBF616A'
+      green: '0xA3BE8C'
+      yellow: '0xEBCB8B'
+      blue: '0x81A1C1'
+      magenta: '0xB48EAD'
+      cyan: '0x88C0D0'
+      white: '0xE5E9F0'
+    bright:
+      black: '0x4C566A'
+      red: '0xBF616A'
+      green: '0xA3BE8C'
+      yellow: '0xEBCB8B'
+      blue: '0x81A1C1'
+      magenta: '0xB48EAD'
+      cyan: '0x8FBCBB'
+      white: '0xECEFF4'
+  papercolor_light: &papercolor_light
+    # Default colors
+    primary:
+      background: '0xeeeeee'
+      foreground: '0x878787'
+
+    cursor:
+      text: '0xeeeeee'
+      cursor: '0x878787'
+
+    # Normal colors
+    normal:
+      black:   '0xeeeeee'
+      red:     '0xaf0000'
+      green:   '0x008700'
+      yellow:  '0x5f8700'
+      blue:    '0x0087af'
+      magenta: '0x878787'
+      cyan:    '0x005f87'
+      white:   '0x444444'
+
+    # Bright colors
+    bright:
+      black:   '0xbcbcbc'
+      red:     '0xd70000'
+      green:   '0xd70087'
+      yellow:  '0x8700af'
+      blue:    '0xd75f00'
+      magenta: '0xd75f00'
+      cyan:    '0x005faf'
+      white:   '0x005f87'
 
 colors: *gruvbox_dark

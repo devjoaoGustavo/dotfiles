@@ -1,73 +1,79 @@
 filetype off
-let skip_defaults_vim = 1
 
 call plug#begin('~/.vim/plugged')
 Plug 'scrooloose/nerdtree'
-
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-
+Plug 'itchyny/lightline.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'kien/ctrlp.vim'
-
 Plug 'wakatime/vim-wakatime'
-
-Plug 'arcticicestudio/nord-vim'
 Plug 'cormacrelf/vim-colors-github'
+Plug 'morhetz/gruvbox'
+Plug 'bagrat/vim-buffet'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
 
 " LANGUAGES
 Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
-Plug 'fatih/vim-go'
 Plug 'hashivim/vim-terraform'
 Plug 'jparise/vim-graphql'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript'
 Plug 'slashmili/alchemist.vim'
 Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-" Plug 'w0rp/ale'
 
 call plug#end()
 
 packadd! matchit
-
-let g:user_emmet_install_global = 1
-let g:user_emmet_leader_key='<C-x>'
-let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
 let g:terraform_fmt_on_save=1
 
-let g:ale_enabled = 1
-let g:ale_linters = {
-      \ 'go': ['gopls'],
-      \ }
+" vim-buffet configurations
+let g:buffet_always_show_tabline = 0
+nmap <leader>1 <Plug>BuffetSwitch(1)
+nmap <leader>2 <Plug>BuffetSwitch(2)
+nmap <leader>3 <Plug>BuffetSwitch(3)
+nmap <leader>4 <Plug>BuffetSwitch(4)
+nmap <leader>5 <Plug>BuffetSwitch(5)
+nmap <leader>6 <Plug>BuffetSwitch(6)
+nmap <leader>7 <Plug>BuffetSwitch(7)
+nmap <leader>8 <Plug>BuffetSwitch(8)
+nmap <leader>9 <Plug>BuffetSwitch(9)
+nmap <leader>0 <Plug>BuffetSwitch(10)
+
+noremap <Tab> :bn<CR>
+noremap <S-Tab> :bp<CR>
+noremap <Leader><Tab> :Bw<CR>
+noremap <Leader><S-Tab> :Bw!<CR>
+noremap <C-t> :tabnew new<CR>
 
 filetype plugin indent on
 
 syntax on
 
 set termguicolors
-set background=light
+set background=dark
 
-colorscheme grb24bit
-hi Normal guibg=NONE ctermbg=NONE
-hi NonText ctermbg=NONE
+let g:gruvbox_termcolors=16
+
+let g:lightline = { 'colorscheme': 'gruvbox' }
+
+colorscheme gruvbox
 
 let mapleader = " "
-
-if has('nvim')
-  autocmd TermOpen * startinsert
-  set inccommand=nosplit
-endif
 
 set t_ZH=[3m
 set t_ZR=[23m
 set t_Co=256
 set t_ut=
+
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
 
 set autoindent
 set copyindent
@@ -83,12 +89,7 @@ set modeline
 set modelines=3
 set nojoinspaces
 set noswapfile
-set mouse=nvi
 set guicursor=
-map <ScrollWheelUp> <C-Y>
-map <S-ScrollWheelUp> <C-U>
-map <ScrollWheelDown> <C-E>
-map <S-ScrollWheelDown> <C-D>
 
 set shortmess+=cS
 
@@ -100,8 +101,8 @@ set nobackup
 set nowritebackup
 set nrformats=
 set path=.,,app/**
-set nonumber
-set norelativenumber
+set number
+set relativenumber
 set showmatch
 set signcolumn=auto
 set splitbelow
@@ -117,7 +118,7 @@ set showcmd
 set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set tags^=./.git/tags
 
-set statusline=%<%f\ %h%m%r%=%y%=%B\ -\ %O%=%-14.(%l,%c%V%)\ %P
+" set statusline=%<%f\ %h%m%r%=%y%=%B\ -\ %O%=%-14.(%l,%c%V%)\ %P
 
 set title
 set novisualbell
