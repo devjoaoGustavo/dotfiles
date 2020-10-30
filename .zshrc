@@ -150,5 +150,6 @@ export AWS_REGION=us-east-1
 
 # eval "$(starship init zsh)"
 
-alias v="/usr/local/Cellar/vim/8.2.1800_1/bin/vim"
+alias vim="nvim"
+alias vi="nvim"
 

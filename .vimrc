@@ -14,6 +14,7 @@ Plug 'wakatime/vim-wakatime'
 Plug 'cormacrelf/vim-colors-github'
 Plug 'morhetz/gruvbox'
 Plug 'bagrat/vim-buffet'
+Plug 'yssl/QFEnter'
 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jremmen/vim-ripgrep'
