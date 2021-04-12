@@ -721,9 +721,9 @@
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # in the order they were defined in.
-#key_bindings:
-  #- { key: Paste,                                       action: Paste          }
-  #- { key: Copy,                                        action: Copy           }
+key_bindings:
+  - { key: V, mods: Alt, action: Paste }
+  - { key: C, mods: Alt, action: Copy }
   #- { key: L,         mods: Control,                    action: ClearLogNotice }
   #- { key: L,         mods: Control, mode: ~Vi|~Search, chars: "\x0c"          }
   #- { key: PageUp,    mods: Shift,   mode: ~Alt,        action: ScrollPageUp,  }
@@ -880,30 +880,33 @@ cursor:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
-  style: Block
+  style: Underline
   unfocused_hollow: true
 
 window:
-  title: devjoaogustavo
+  title: Alacritty
+  dimensions:
+    columns: 80
+    lines: 25
 
 live_config_reload: true
 
 # Font configuration (changes require restart)
 font:
-  size: 14.0
+  size: 12.0
   normal:
-    family: Ubuntu Mono
-    # family: Fira Code
+    # family: Ubuntu Mono
+    family: JetBrainsMono NerdFont
     # family: Source Code Pro for Powerline
-    style: Regular
+    style: Medium
   bold:
-    family: Ubuntu Mono
-    # family: Fira Code
+    # family: Ubuntu Mono
+    family: JetBrainsMono NerdFont
     # family: Source Code Pro for Powerline
     style: Bold
   italic:
-    family: Ubuntu Mono
-    # family: Fira Code
+    # family: Ubuntu Mono
+    family: JetBrainsMono NerdFont
     # family: Source Code Pro for Powerline
     style: Italic
 
@@ -1173,4 +1176,27 @@ schemes:
       cyan: '#95E6CB'
       white: '#FFFFFF'
 
-colors: *gruvbox_dark
+  tender: &tender
+    primary:
+      background: '0x282828'
+      foreground: '0xeeeeee'
+    normal:
+      black:   '0x282828'
+      red:     '0xf43753'
+      green:   '0xc9d05c'
+      yellow:  '0xffc24b'
+      blue:    '0xb3deef'
+      magenta: '0xd3b987'
+      cyan:    '0x73cef4'
+      white:   '0xeeeeee'
+    bright:
+      black:   '0x4c4c4c'
+      red:     '0xf43753'
+      green:   '0xc9d05c'
+      yellow:  '0xffc24b'
+      blue:    '0xb3deef'
+      magenta: '0xd3b987'
+      cyan:    '0x73cef4'
+      white:   '0xfeffff'
+
+colors: *tender

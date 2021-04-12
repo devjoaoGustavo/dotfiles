@@ -1,7 +1,5 @@
-#! /bin/bash
-
-alias sshadd="ssh-add ~/.ssh/id_rsa_gateway"
-alias nib="ssh -i ~/.ssh/id_rsa_gateway _jpaula@nibbler0001.locaweb.com.br"
+#! /usr/bin/env bash
+set -e
 
 alias gs="git status"
 alias gd="git diff"
@@ -31,4 +29,3 @@ alias instal="bundle install"
 alias install="bundle install"
 
 alias redis="docker run --rm -d -p 6379:6379 redis"
-alias wx=wxrc
