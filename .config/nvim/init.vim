@@ -1,13 +1,16 @@
+" setting off filetype {{{
 filetype off
 let skip_defaults_vim = 1
+" }}}
 
+" PLUGINS{{{
 call plug#begin('~/.vim/plugged')
 Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'airblade/vim-rooter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jlanzarotta/bufexplorer'
-Plug 'bling/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-rails'
@@ -15,10 +18,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'dense-analysis/ale'
 Plug 'sainnhe/gruvbox-material'
-Plug 'rakr/vim-one'
 Plug 'kien/ctrlp.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'jremmen/vim-ripgrep'
@@ -29,41 +30,29 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'slashmili/alchemist.vim', { 'for': 'elixir' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 call plug#end()
+"}}}
 
-let g:airline_powerline_fonts = 1
-let loaded_matchit = 1
-let b:match_words = '\<if\>:\<end\>,\<do\>:\<end\>,\<def\>:\<end\>'
-let g:terraform_fmt_on_save=1
-let g:ale_enabled = 1
-let g:ale_linters = {
-      \ 'go': ['gopls'],
-      \ }
-let g:rustfmt_autosave = 1
-let g:rust_clip_command = 'xclip -selection clipboard'
-
+" setting filetype and syntax {{{
 filetype plugin indent on
-
 syntax enable
+" }}}
+
+" COLORSCHEME {{{
 set termguicolors
 set background=dark
-colorscheme gruvbox-material
+colorscheme gruvbox
+" }}}
 
-let mapleader = " "
+" LEADER {{{
+let g:mapleader = " "
+let g:maplocalleader = ','
+" }}}
 
-autocmd TermOpen * startinsert
-
-set t_ZH=[3m
-set t_ZR=[23m
-set t_Co=256
-set t_ut=
-
-set guicursor=n-v-c:block,i-ci-ve:ver35,r-cr:hor20,o:hor50
-      \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
-      \,sm:block-blinkwait175-blinkoff150-blinkon175
-
+" set settings{{{
+set foldmethod=marker
+set mouse=a
 set inccommand=nosplit
 set encoding=UTF-8
-set mouse=a
 set autoindent
 set copyindent
 set smartindent
@@ -89,7 +78,7 @@ set nobackup
 set nowritebackup
 set nrformats=
 set path=.,,app/**,domains/**,plugins/**,deprecated_modules/**,modules/**,lib/**,vendor/**
-set nonumber
+set number
 set norelativenumber
 set showmatch
 set signcolumn=auto
@@ -111,35 +100,49 @@ set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set tags^=./.git/tags
 set title
 set novisualbell
+if !exists("neovide")
+  set guicursor=n-v-c:block,i-ci-ve:ver35,r-cr:hor20,o:hor50
+        \,a:blinkwait500-blinkoff300-blinkon200-Cursor/lCursor
+        \,sm:block-blinkwait150-blinkoff100-blinkon150
+endif
+"}}}
 
-" toggle list flag in order to display characters for space, tab eol, etc...
+" keymappings {{{
 nnoremap gs :Git<cr>
 nnoremap <Tab> :tabn<cr>
 nnoremap <S-Tab> :tabp<cr>
-nnoremap g<Tab> :bn<cr>
-nnoremap g<S-Tab> :bp<cr>
-tnoremap <Esc> <c-\><c-n>
 nnoremap <Esc><Esc> :w<cr>
-nnoremap <leader>m :set invlist<cr>
-nnoremap <leader><leader> <c-^>
-nnoremap <leader>fs :w<cr>
 nnoremap <leader>/ :Rg<space>
+nnoremap <leader><leader> <c-^>
 nnoremap <leader>fed :e ~/.config/nvim/init.vim<cr>
 nnoremap <leader>fer :so ~/.config/nvim/init.vim<cr>
-nnoremap <leader>cf :let @+ = expand("%")<cr>
+nnoremap <leader>ff :NERDTreeFind<CR>
+nnoremap <leader>fs :w<cr>
+nnoremap <leader>fy :let @+ = expand("%")<cr>
 nnoremap <leader>hl :nohlsearch<CR>
-nnoremap <leader>0 :NERDTreeFocus<CR>
+nnoremap <leader>m :set invlist<cr>
 nnoremap <leader>n :NERDTreeToggle<CR>
-nnoremap <leader>pt :NERDTreeToggle<CR>
-nnoremap <leader>f :NERDTreeFind<CR>
 nnoremap <leader>te :tabe %<cr>
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <leader>hn :GitGutterNextHunk<cr>
+nnoremap <leader>hh :GitGutterPrevHunk<cr>
+nnoremap <leader>hq :GitGutterQuickFix<cr>
+" Terminal
+autocmd TermOpen * startinsert
+nnoremap <leader>sh :sp term://bash<cr>
+tnoremap <Esc> <c-\><c-n>
+"}}}
 
-" Remove all trailing space before save the buffer
+" AUTO COMMANDS{{{
 autocmd BufWritePre * :%s/\s\+$//e
-" Jump to last cursor position unless it's invalid or in an event handler
 autocmd BufReadPost *
       \ if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g`\"" | endif
+"}}}
 
+" LET SETTINGS{{{{{{
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 let g:go_fmt_autosave = 1
 let g:go_imports_autosave = 1
@@ -150,12 +153,34 @@ let g:ruby_indent_assignment_style = 'variable'
 let g:ruby_host_prog = '/home/JOAO.GUSTAVO/.asdf/shims/neovim-ruby-host'
 let g:python3_host_prog = "/usr/bin/python3"
 let g:python2_host_prog = "/usr/bin/python2"
+let g:bufExplorerSplitBelow=1
+let g:bufExplorerSplitRight=1
+let g:bufExplorerSortBy='name'
+let g:ale_enabled = 1
+let g:ale_linters = { 'go': ['gopls'] }
+let g:rustfmt_autosave = 1
+let g:rust_clip_command = 'xclip -selection clipboard'
+"}}}
+
+" nerdtree{{{
+let NERDTreeShowHidden = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeIgnore = []
+let NERDTreeStatusline = ''
 let NERDTreeIgnore=['\.pyc$', '\~$']
 let g:NERDTreeMapCustomOpen = 'l'
 let g:NERDTreeMapCloseDir = 'h'
-let g:NERDTreeDirArrowExpandable = '→'
-let g:NERDTreeDirArrowCollapsible = '↓'
-let g:bufExplorerSplitBelow=1
-let g:bufExplorerSplitRight=1
-let g:airline_theme='simple'
-let g:airline#extensions#tabline#enabled = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+    \ "Modified"  : "✹",
+    \ "Staged"    : "✚",
+    \ "Untracked" : "✭",
+    \ "Renamed"   : "➜",
+    \ "Unmerged"  : "═",
+    \ "Deleted"   : "✖",
+    \ "Dirty"     : "✗",
+    \ "Clean"     : "✔︎",
+    \ 'Ignored'   : '☒',
+    \ "Unknown"   : "?"
+    \ }
+"}}}
