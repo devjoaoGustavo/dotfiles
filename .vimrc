@@ -6,7 +6,6 @@ Plug 'elixir-editors/vim-elixir', { 'for': 'elixir' }
 Plug 'fatih/vim-go'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jremmen/vim-ripgrep'
-Plug 'kien/ctrlp.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'sainnhe/gruvbox-material'
@@ -23,6 +22,7 @@ Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'wakatime/vim-wakatime'
 Plug 'airblade/vim-rooter'
 Plug 'jlanzarotta/bufexplorer'
+Plug 'Yggdroot/LeaderF', { 'do': ':LeaderfInstallCExtension' }
 call plug#end()
 
 set history=500
@@ -139,10 +139,19 @@ set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 set wildmode=full
 
 nnoremap gs :Git<cr>
-nnoremap <leader>fed :e ~/.vimrc<cr>
-nnoremap <leader>fer :so ~/.vimrc<cr>
+nnoremap <leader>vm :e ~/.vimrc<cr>
+nnoremap <leader>vr :so ~/.vimrc<cr>
 nnoremap <leader>nf :NERDTreeFind<CR>
 nnoremap <leader>cf :let @+ = expand("%")<cr>
 nnoremap <leader>m :set invlist<cr>
-nnoremap <leader>n :NERDTreeToggle<CR>
+nnoremap ,n :NERDTreeToggle<CR>
 nnoremap <leader>te :tabe %<cr>
+
+let NERDTreeShowHidden = 1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
+let NERDTreeIgnore = []
+let NERDTreeStatusline = ''
+let NERDTreeIgnore=['\.pyc$', '\~$']
+let g:NERDTreeMapCustomOpen = 'l'
+let g:NERDTreeMapCloseDir = 'h'
