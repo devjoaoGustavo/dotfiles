@@ -1199,4 +1199,4 @@ schemes:
       cyan:    '0x73cef4'
       white:   '0xfeffff'
 
-colors: *tender
+colors: *gruvbox_dark
