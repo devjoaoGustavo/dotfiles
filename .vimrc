@@ -55,7 +55,6 @@ set autowrite
 set autowriteall
 set splitbelow
 set splitright
-set clipboard+=unnamedplus
 set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
 
 nmap + mz:m+<cr>`z
