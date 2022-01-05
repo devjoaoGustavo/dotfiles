@@ -1,62 +1,60 @@
 filetype off
 
-lua <<PLUGINS
-vim.cmd [[packadd packer.nvim]]
-
-return require('packer').startup(function()
-  -- use 'tpope/vim-rails'
-  use { 'vim-ruby/vim-ruby', ft = { 'ruby' } }
-  use 'tpope/vim-rails'
-  use 'christoomey/vim-tmux-navigator'
-  use {'andymass/vim-matchup', event = 'VimEnter'}
-  use 'preservim/nerdtree'
-  use 'airblade/vim-rooter'
-  use 'jiangmiao/auto-pairs'
-  use 'tpope/vim-commentary'
-  use 'tpope/vim-dispatch'
-  use 'tpope/vim-repeat'
-  use 'tpope/vim-surround'
-  use 'sainnhe/gruvbox-material'
-  use 'pbrisbin/vim-colors-off'
-  use 'wakatime/vim-wakatime'
-  use {'ojroques/nvim-hardline'}
-  use 'jremmen/vim-ripgrep'
-  use { 'neoclide/coc.nvim', branch = 'release' }
-  use { 'pangloss/vim-javascript', ft = { 'javascript' } }
-  use 'hashivim/vim-terraform'
-  use { 'junegunn/fzf', run = function() vim.fn['fzf#install()'](0) end }
-  use 'junegunn/fzf.vim'
-  use 'elixir-editors/vim-elixir'
-  use 'APZelos/blamer.nvim'
-  use 'dense-analysis/ale'
-end)
-PLUGINS
-
-lua <<CONFIG
-require('hardline').setup {
-  theme = 'gruvbox',
-}
-CONFIG
+call plug#begin('~/config/nvim/plugged')
+Plug 'tpope/vim-rails'
+Plug 'vim-ruby/vim-ruby', {  'for': 'ruby' }
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'andymass/vim-matchup'
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'jiangmiao/auto-pairs'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'sainnhe/gruvbox-material'
+Plug 'pbrisbin/vim-colors-off'
+Plug 'wakatime/vim-wakatime'
+Plug 'ojroques/nvim-hardline'
+Plug 'jremmen/vim-ripgrep'
+Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'hashivim/vim-terraform'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'elixir-editors/vim-elixir'
+call plug#end()
 
 filetype plugin on
 filetype indent on
 
 syntax enable
 
+function GitBranch()
+  let branch_name = trim(system('git rev-parse --abbrev-ref HEAD 2&> /dev/null'))
+  if branch_name != ''
+    return '[' . branch_name . ']'
+  else
+    return ""
+  endif
+endfunction
+set statusline=%<%f\ %h%m%r\ %{GitBranch()}\ %=%-14.(%l,%c%V%)\ %P
+
 let g:coc_global_extensions = ['coc-html-css-support',
-                        \ 'coc-tsserver', 'coc-vimlsp',
+                        \ 'coc-tsserver',
                         \ 'coc-json', 'coc-git', 'coc-solargraph',
                         \ 'coc-html-css-support']
 
 set termguicolors
+set background=dark
 nnoremap <leader>l :set background=light<cr><leader>gZ
 nnoremap <leader>d :set background=dark<cr><leader>gZ
-colorscheme off
+colorscheme gruvbox-material
 
 let g:colors_off_a_little = 1
 let g:mapleader = " "
 let g:maplocalleader = ','
 
+set guifont=JetBrainsMono\ NF:h12
 set magic
 set wildignore=*.o,*~,*.pyc
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
@@ -87,7 +85,7 @@ set shiftround
 set softtabstop=2
 set shiftwidth=2
 set nobackup
-set path=.,,components/**,apps/**,lib/**,app/**,domains/**,plugins/**,deprecated_modules/**,modules/**,lib/**,vendor/**
+set path=.,,app-*/**,components/**,apps/**,lib/**,app/**,domains/**,plugins/**,deprecated_modules/**,modules/**,lib/**,vendor/**
 set number
 set norelativenumber
 set showmatch
@@ -102,17 +100,23 @@ set autowriteall
 set wildmenu
 set wildmode=full
 set showtabline=1
-set noshowmode
+set showmode
 set incsearch
 set hlsearch
 set showcmd
-set listchars=tab:◁∙▷,trail:∙,precedes:∙,eol:⏎
+set list
+set listchars=tab:◁∙▷,trail:∙,precedes:∙
 set tags^=./.git/tags
 set title
 set novisualbell
 set history=500
 set sidescroll=5
+set scrolloff=8
+set sidescrolloff=8
 set listchars+=precedes:<,extends:>
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+      \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+      \,sm:block-blinkwait175-blinkoff150-blinkon175
 
 nnoremap <silent> <leader>bd :bd<cr>
 nnoremap <silent> <Esc><Esc> :w<cr>
@@ -122,13 +126,13 @@ nnoremap <silent> gz :e ~/.config/nvim/init.vim<cr>
 nnoremap <silent> gZ :so ~/.config/nvim/init.vim<cr>
 nnoremap <silent> gy :let @+ = expand("%")<cr>
 nnoremap <silent><leader>hl :nohlsearch<CR>
-nnoremap <silent> \q :nohlsearch<CR>
 nnoremap <silent> <leader>n :NERDTreeToggle<CR>
 nnoremap <silent> <leader>te :tabe %<cr>
 nnoremap <c-p> :Files .<cr>
 nnoremap <c-s> :Buffers<cr>
 nnoremap <silent><leader>bl :BLines<cr>
 nnoremap <silent><leader>. :Lines<cr>
+nnoremap <leader>x :!xdg-open %<cr><cr>
 
 nmap + mz:m+<cr>`z
 nmap - mz:m-2<cr>`z
@@ -169,7 +173,7 @@ let NERDTreeShowHidden = 0
 let NERDTreeMinimalUI=1
 
 let g:fzf_buffers_jump = 1
-let g:fzf_layout = { 'down': '40%' }
+" let g:fzf_layout = { 'down': '40%' }
 
 let g:blamer_enabled = 1
 let g:blamer_delay = 500
