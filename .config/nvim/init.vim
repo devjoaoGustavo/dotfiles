@@ -1,9 +1,10 @@
 filetype off
 
 call plug#begin('~/config/nvim/plugged')
+Plug 'fladson/vim-kitty'
 Plug 'tpope/vim-rails'
 Plug 'vim-ruby/vim-ruby', {  'for': 'ruby' }
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 Plug 'andymass/vim-matchup'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'jiangmiao/auto-pairs'
@@ -28,6 +29,7 @@ filetype plugin on
 filetype indent on
 
 syntax enable
+
 
 function GitBranch()
   let branch_name = trim(system('git rev-parse --abbrev-ref HEAD 2&> /dev/null'))
@@ -133,6 +135,11 @@ nnoremap <c-s> :Buffers<cr>
 nnoremap <silent><leader>bl :BLines<cr>
 nnoremap <silent><leader>. :Lines<cr>
 nnoremap <leader>x :!xdg-open %<cr><cr>
+
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
 
 nmap + mz:m+<cr>`z
 nmap - mz:m-2<cr>`z
