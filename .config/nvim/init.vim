@@ -3,8 +3,10 @@ filetype off
 call plug#begin('~/config/nvim/plugged')
 Plug 'fladson/vim-kitty'
 Plug 'tpope/vim-rails'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-unimpaired'
 Plug 'vim-ruby/vim-ruby', {  'for': 'ruby' }
-" Plug 'christoomey/vim-tmux-navigator'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'andymass/vim-matchup'
 Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'jiangmiao/auto-pairs'
@@ -14,6 +16,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'sainnhe/gruvbox-material'
 Plug 'pbrisbin/vim-colors-off'
+Plug 'hzchirs/vim-material'
 Plug 'wakatime/vim-wakatime'
 Plug 'ojroques/nvim-hardline'
 Plug 'jremmen/vim-ripgrep'
@@ -56,13 +59,13 @@ let g:colors_off_a_little = 1
 let g:mapleader = " "
 let g:maplocalleader = ','
 
-set guifont=JetBrainsMono\ NF:h12
+" set guifont=JetBrainsMono\ NF:h12
 set magic
 set wildignore=*.o,*~,*.pyc
 set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 set cmdheight=1
 set foldmethod=marker
-set mouse=a
+" set mouse=a
 set inccommand=nosplit
 set encoding=UTF-8
 set autoindent
@@ -136,10 +139,10 @@ nnoremap <silent><leader>bl :BLines<cr>
 nnoremap <silent><leader>. :Lines<cr>
 nnoremap <leader>x :!xdg-open %<cr><cr>
 
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
+" nnoremap <c-h> <c-w>h
+" nnoremap <c-j> <c-w>j
+" nnoremap <c-k> <c-w>k
+" nnoremap <c-l> <c-w>l
 
 nmap + mz:m+<cr>`z
 nmap - mz:m-2<cr>`z
